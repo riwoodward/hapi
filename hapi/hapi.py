@@ -7,14 +7,14 @@ Data is downloaded and cached.
 This module serves as a simple database manager front end.
 
 API is aimed to be RESTful, which means that interaction
-between local API and remote data-server will be held 
+between local API and remote data-server will be held
 via sending RESTful queries (API->remote) and
 receiving data preferably in text format (remote->API).
 
 Object are supposed to be implemented by structures/dicts
 as they are present in almost any programming language.
 
-Trying to retain functional style for this API. 
+Trying to retain functional style for this API.
 '''
 
 #import httplib
@@ -49,21 +49,21 @@ try:
 except ImportError:
     import urllib2
 
-HAPI_VERSION = '1.1.0.8.5' 
+HAPI_VERSION = '1.1.0.8.5'
 __version__ = HAPI_VERSION
 # CHANGES:
 # FIXED GRID BUG (ver. 1.1.0.1)
 # FIXED OUTPUT FORMAT FOR CROSS-SECTIONS (ver. 1.1.0.1)
-# ADDED CPF BY SCHREIER (JQSRT_112_2011) (ver. 1.1.0.2) 
-# OPTIMIZED EXPRESSION EVALUATIONS FOR SELECT (ver. 1.1.0.3) 
-# ADDED SUPPORT FOR MIXTURES (ver. 1.1.0.4) 
-# ADDED SUPPORT FOR USER-DEFINED ENV DEPENDENCES (ver. 1.1.0.5) 
-# ADDED PROFILE SELECTION (ALPHA) (ver. 1.1.0.6) 
-# ADDED METADATA FOR HTP, FIXED NORMALIZATION IN CONVOLVESPECTRUMSAME (ver. 1.1.0.7) 
-# FIXED A "LONELY HEADER" BUG IN CACHE2STORAGE (ver. 1.1.0.7.1) 
-# ADDED SUPPORT FOR PHOSGENE AND CYANOGEN (ver. 1.1.0.7.2) 
-# OPTIMIZED STORAGE2CACHE (by Nils-Holger Löber) (ver. 1.1.0.7.3) 
-# ADDED SKIPABLE PARAMETERS IN HEADERS (ver. 1.1.0.7.4) 
+# ADDED CPF BY SCHREIER (JQSRT_112_2011) (ver. 1.1.0.2)
+# OPTIMIZED EXPRESSION EVALUATIONS FOR SELECT (ver. 1.1.0.3)
+# ADDED SUPPORT FOR MIXTURES (ver. 1.1.0.4)
+# ADDED SUPPORT FOR USER-DEFINED ENV DEPENDENCES (ver. 1.1.0.5)
+# ADDED PROFILE SELECTION (ALPHA) (ver. 1.1.0.6)
+# ADDED METADATA FOR HTP, FIXED NORMALIZATION IN CONVOLVESPECTRUMSAME (ver. 1.1.0.7)
+# FIXED A "LONELY HEADER" BUG IN CACHE2STORAGE (ver. 1.1.0.7.1)
+# ADDED SUPPORT FOR PHOSGENE AND CYANOGEN (ver. 1.1.0.7.2)
+# OPTIMIZED STORAGE2CACHE (by Nils-Holger Löber) (ver. 1.1.0.7.3)
+# ADDED SKIPABLE PARAMETERS IN HEADERS (ver. 1.1.0.7.4)
 # ADDED SUPPORT FOR FORTRAN D-NOTATION (ver. 1.1.0.7.5)
 # ADDED SUPPORT FOR WEIRD-FORMATTED INTENSITY VALUES E.G. "2.700-164" (ver. 1.1.0.7.6)
 # ADDED TIPS-2017 (ver. 1.1.0.8)
@@ -142,7 +142,7 @@ VARIABLES['GLOBAL_HOST'] = GLOBAL_HOST
 # display the fetch URL (debug)
 VARIABLES['DISPLAY_FETCH_URL'] = False
 
-# In this "robust" version of arange the grid doesn't suffer 
+# In this "robust" version of arange the grid doesn't suffer
 # from the shift of the nodes due to error accumulation.
 # This effect is pronounced only if the step is sufficiently small.
 def arange_(lower,upper,step):
@@ -150,11 +150,11 @@ def arange_(lower,upper,step):
     upper_new = lower + step*(npnt-1)
     if abs((upper-upper_new)-step) < 1e-10:
         upper_new += step
-        npnt += 1    
+        npnt += 1
     return linspace(lower,upper_new,npnt)
 
 
-# interface for checking of variable's existance   
+# interface for checking of variable's existance
 def empty(Instance):
     return True if Instance else False
 
@@ -206,10 +206,10 @@ def httpGet(URL,Connection=GLOBAL_CONNECTION):
 
 # parse local data language to remote frontend
 def parseToFrontend(Query,Host=VARIABLES['GLOBAL_HOST']):
-    # convert Query object to server frontend's 
+    # convert Query object to server frontend's
     # query language
-    pass 
- 
+    pass
+
 def prepareURL(Query,Connection=GLOBAL_CONNECTION):
     # make full URL from server name and it's parameters
     # considering server's frontend query language
@@ -226,11 +226,11 @@ def streamRawDataRemote(Query,Connection=GLOBAL_CONNECTION):
 
 # collect raw data in whatever format server gives it
 def getRawDataRemote(Query,Connection=GLOBAL_CONNECTION):
-    URL = prepareURL(Query,Connection)    
+    URL = prepareURL(Query,Connection)
     ServerResponse=httpGet(URL,Connection)
     return ServerResponse
 
-## parse raw data 
+## parse raw data
 #def parseRawData(RawData)
 #    pass
 
@@ -249,7 +249,7 @@ def getRawDataRemote(Query,Connection=GLOBAL_CONNECTION):
 # Default node with simple DB engine
 # Prototype for a global node list for a given host
 
-# Each node has it's unique ID, host name and 
+# Each node has it's unique ID, host name and
 #   node name within it's host
 
 NODE_NAME = 'local'
@@ -290,7 +290,7 @@ def getNodeProperty(NodeID,PropName,NodeList=GLOBAL_NODELIST):
        if prop:
           return prop
        else:
-          raise Exception('node %s doesn''t have property %s' % (ModeName,Propname) )       
+          raise Exception('node %s doesn''t have property %s' % (ModeName,Propname) )
     else:
        raise Exception('no such node %s' % Nodename)
 
@@ -327,7 +327,7 @@ def checkAccess(DBName,TableName,NodeName,UserName,Requisites,NodeList=GLOBAL_NO
 # Each users has a key ACCESS_KEY which is stored in
 #  a special database HOST:ACCESS_KEYS on a host.
 # Every node has a separate privileges list connected with
-#  each key. 
+#  each key.
 
 # The current auth system is based on secret keys of access
 # Default key is 'admin', it's created seamlessly for a local admin.
@@ -360,7 +360,7 @@ def checkPrivileges(Path,UserName=GLOBAL_USER,Requisites=GLOBAL_REQUISITES,
     # Path example: SOME_DB::SOME_TABLE::SOME_NODE
     if not authenticate(UserName,Requisites,Privileges): return False
     (DBName,TableName,NodeName)=Path.split('::')
-    # loop on all nodes , use NODE_MANAGER's functions instead of 
+    # loop on all nodes , use NODE_MANAGER's functions instead of
     #   working with GLOBAL_NODELIST directly
     if not checkAccess(DBName,TableName,NodeName,UserName,Requisites,NodeList,NodeNames):
        return False
@@ -386,15 +386,15 @@ def checkPrivileges(Path,UserName=GLOBAL_USER,Requisites=GLOBAL_REQUISITES,
 
 # Every DB has an ACCESS_KEY providing an access to it
 # User can create a database and it will contain
-#  a list of ACCESS_KEY's for authentication. 
+#  a list of ACCESS_KEY's for authentication.
 
 ### GLOBAL AND LOCAL are distributed databases.
 ### A user can create his GLOBAL database and open an access to it.
-### GLOBAL access implementation: 
+### GLOBAL access implementation:
 
 ### GLOBAL is a distributed database
 
-# The DB front end contains interfaces to 
+# The DB front end contains interfaces to
 #  the standard procedures of data creation and
 #  retrieval of an "average" DBMS.
 #   ("collection" = table)
@@ -409,7 +409,7 @@ def checkPrivileges(Path,UserName=GLOBAL_USER,Requisites=GLOBAL_REQUISITES,
 #   Commands to implement:
 #
 #   ) create DATABASE
-#   ) create ACCESS_KEY 
+#   ) create ACCESS_KEY
 #      (seamlessly for the local user)
 #   ) select from LOCAL/GLOBAL doc (cached!)
 #   ) access database
@@ -419,8 +419,8 @@ def checkPrivileges(Path,UserName=GLOBAL_USER,Requisites=GLOBAL_REQUISITES,
 #   ) "create collection as select * from HOST:ENGINE:DB:COLLECTION"
 #      (other types of table creations are forbidden)
 
-# DB frontend is adapted to denormalized 
-#  schema-fixed tables or schema-independent documents. 
+# DB frontend is adapted to denormalized
+#  schema-fixed tables or schema-independent documents.
 
 # DB front end is connected to multiple backends
 #  which are largely language-specific.
@@ -429,8 +429,8 @@ def checkPrivileges(Path,UserName=GLOBAL_USER,Requisites=GLOBAL_REQUISITES,
 ###  the table/document caching is supposed to
 ###  be in the front end.
 ### Current higher-level implementation
-###  implies the query-based caching, i.e. 
-###  cache lookup is performed by the value 
+###  implies the query-based caching, i.e.
+###  cache lookup is performed by the value
 ###  of Query structure/object.
 
 
@@ -442,7 +442,7 @@ def checkPrivileges(Path,UserName=GLOBAL_USER,Requisites=GLOBAL_REQUISITES,
 
 # ---------------------------------------------------------------
 # DATABASE BACKEND: simple text files, parsed into a python lists
-# Use a directory as a database. Each table is stored in a 
+# Use a directory as a database. Each table is stored in a
 # separate text file. Parameters in text are position-fixed.
 
 BACKEND_DATABASE_NAME_DEFAULT = '.'
@@ -457,7 +457,7 @@ LOCAL_TABLE_CACHE = {
          'format' : {
             'column1' : '%10d',
             'column2' : '%20f',
-            'column3' : '%30s' 
+            'column3' : '%30s'
          },
          'default' : {
             'column1' : 0,
@@ -505,92 +505,92 @@ HITRAN_FORMAT_160 = {
 
 # This should be generating from the server's response
 HITRAN_DEFAULT_HEADER = {
-  "table_type": "column-fixed", 
-  "size_in_bytes": -1, 
-  "table_name": "###", 
-  "number_of_rows": -1, 
+  "table_type": "column-fixed",
+  "size_in_bytes": -1,
+  "table_name": "###",
+  "number_of_rows": -1,
   "order": [
-    "molec_id", 
-    "local_iso_id", 
-    "nu", 
-    "sw", 
-    "a", 
-    "gamma_air", 
-    "gamma_self", 
-    "elower", 
-    "n_air", 
-    "delta_air", 
-    "global_upper_quanta", 
-    "global_lower_quanta", 
-    "local_upper_quanta", 
-    "local_lower_quanta", 
-    "ierr", 
-    "iref", 
-    "line_mixing_flag", 
-    "gp", 
+    "molec_id",
+    "local_iso_id",
+    "nu",
+    "sw",
+    "a",
+    "gamma_air",
+    "gamma_self",
+    "elower",
+    "n_air",
+    "delta_air",
+    "global_upper_quanta",
+    "global_lower_quanta",
+    "local_upper_quanta",
+    "local_lower_quanta",
+    "ierr",
+    "iref",
+    "line_mixing_flag",
+    "gp",
     "gpp"
   ],
   "format": {
-    "a": "%10.3E", 
-    "gamma_air": "%5.4f", 
-    "gp": "%7.1f", 
-    "local_iso_id": "%1d", 
-    "molec_id": "%2d", 
-    "sw": "%10.3E", 
-    "local_lower_quanta": "%15s", 
-    "local_upper_quanta": "%15s", 
-    "gpp": "%7.1f", 
-    "elower": "%10.4f", 
-    "n_air": "%4.2f", 
-    "delta_air": "%8.6f", 
-    "global_upper_quanta": "%15s", 
-    "iref": "%12s", 
-    "line_mixing_flag": "%1s", 
-    "ierr": "%6s", 
-    "nu": "%12.6f", 
-    "gamma_self": "%5.3f", 
+    "a": "%10.3E",
+    "gamma_air": "%5.4f",
+    "gp": "%7.1f",
+    "local_iso_id": "%1d",
+    "molec_id": "%2d",
+    "sw": "%10.3E",
+    "local_lower_quanta": "%15s",
+    "local_upper_quanta": "%15s",
+    "gpp": "%7.1f",
+    "elower": "%10.4f",
+    "n_air": "%4.2f",
+    "delta_air": "%8.6f",
+    "global_upper_quanta": "%15s",
+    "iref": "%12s",
+    "line_mixing_flag": "%1s",
+    "ierr": "%6s",
+    "nu": "%12.6f",
+    "gamma_self": "%5.3f",
     "global_lower_quanta": "%15s"
-  }, 
+  },
   "default": {
-    "a": 0.0, 
-    "gamma_air": 0.0, 
-    "gp": "FFF", 
-    "local_iso_id": 0, 
-    "molec_id": 0, 
-    "sw": 0.0, 
-    "local_lower_quanta": "000", 
-    "local_upper_quanta": "000", 
-    "gpp": "FFF", 
-    "elower": 0.0, 
-    "n_air": 0.0, 
-    "delta_air": 0.0, 
-    "global_upper_quanta": "000", 
-    "iref": "EEE", 
-    "line_mixing_flag": "EEE", 
-    "ierr": "EEE", 
-    "nu": 0.0, 
-    "gamma_self": 0.0, 
+    "a": 0.0,
+    "gamma_air": 0.0,
+    "gp": "FFF",
+    "local_iso_id": 0,
+    "molec_id": 0,
+    "sw": 0.0,
+    "local_lower_quanta": "000",
+    "local_upper_quanta": "000",
+    "gpp": "FFF",
+    "elower": 0.0,
+    "n_air": 0.0,
+    "delta_air": 0.0,
+    "global_upper_quanta": "000",
+    "iref": "EEE",
+    "line_mixing_flag": "EEE",
+    "ierr": "EEE",
+    "nu": 0.0,
+    "gamma_self": 0.0,
     "global_lower_quanta": "000"
   },
   "description": {
-    "a": "Einstein A-coefficient in s-1", 
-    "gamma_air": "Air-broadened Lorentzian half-width at half-maximum at p = 1 atm and T = 296 K", 
-    "gp": "Upper state degeneracy", 
-    "local_iso_id": "Integer ID of a particular Isotopologue, unique only to a given molecule, in order or abundance (1 = most abundant)", 
-    "molec_id": "The HITRAN integer ID for this molecule in all its isotopologue forms", 
-    "sw": "Line intensity, multiplied by isotopologue abundance, at T = 296 K", 
-    "local_lower_quanta": "Rotational, hyperfine and other quantum numbers and labels for the lower state of a transition", 
-    "local_upper_quanta": "Rotational, hyperfine and other quantum numbers and labels for the upper state of a transition", 
-    "gpp": "Lower state degeneracy", 
-    "elower": "Lower-state energy", 
-    "n_air": "Temperature exponent for the air-broadened HWHM", 
-    "delta_air": "Pressure shift induced by air, referred to p=1 atm", 
-    "global_upper_quanta": "Electronic and vibrational quantum numbers and labels for the upper state of a transition", 
-    "iref": "Ordered list of reference identifiers for transition parameters", 
-    "line_mixing_flag": "A flag indicating the presence of additional data and code relating to line-mixing", 
-    "ierr": "Ordered list of indices corresponding to uncertainty estimates of transition parameters", 
-    "nu": "Transition wavenumber", 
-    "gamma_self": "Self-broadened HWHM at 1 atm pressure and 296 K", 
+    "a": "Einstein A-coefficient in s-1",
+    "gamma_air": "Air-broadened Lorentzian half-width at half-maximum at p = 1 atm and T = 296 K",
+    "gp": "Upper state degeneracy",
+    "local_iso_id": "Integer ID of a particular Isotopologue, unique only to a given molecule, in order or abundance (1 = most abundant)",
+    "molec_id": "The HITRAN integer ID for this molecule in all its isotopologue forms",
+    "sw": "Line intensity, multiplied by isotopologue abundance, at T = 296 K",
+    "local_lower_quanta": "Rotational, hyperfine and other quantum numbers and labels for the lower state of a transition",
+    "local_upper_quanta": "Rotational, hyperfine and other quantum numbers and labels for the upper state of a transition",
+    "gpp": "Lower state degeneracy",
+    "elower": "Lower-state energy",
+    "n_air": "Temperature exponent for the air-broadened HWHM",
+    "delta_air": "Pressure shift induced by air, referred to p=1 atm",
+    "global_upper_quanta": "Electronic and vibrational quantum numbers and labels for the upper state of a transition",
+    "iref": "Ordered list of reference identifiers for transition parameters",
+    "line_mixing_flag": "A flag indicating the presence of additional data and code relating to line-mixing",
+    "ierr": "Ordered list of indices corresponding to uncertainty estimates of transition parameters",
+    "nu": "Transition wavenumber",
+    "gamma_self": "Self-broadened HWHM at 1 atm pressure and 296 K",
     "global_lower_quanta": "Electronic and vibrational quantum numbers and labels for the lower state of a transition"
   },
   "position": {
@@ -633,7 +633,7 @@ HITRAN_DEFAULT_HEADER = {
     "iref": "str",
     "line_mixing_flag": "str",
     "gp": "int16",
-    "gpp": "int16",  
+    "gpp": "int16",
   }
 }
 
@@ -1254,7 +1254,7 @@ PARAMETER_META = \
     "selectable" : 1,
     "has_reference" : 1,
     "has_error" : 1
-  }, 
+  },
   "gamma_HT_0_self_50" : {
     "default_fmt" : "%6.4f",
   },
@@ -1416,7 +1416,7 @@ PARAMETER_META = \
   },
   "eta_HT_air" : {
     "default_fmt" : "%9.6f",
-  },  
+  },
 }
 
 def transport2object(TransportData):
@@ -1493,7 +1493,7 @@ def getDefaultRowObject(TableName):
     return RowObject
 
 def subsetOfRowObject(ParameterNames,RowObject):
-    # return a subset of RowObject according to 
+    # return a subset of RowObject according to
     #RowObjectNew = []
     #for par_name,par_value,par_format in RowObject:
     #     if par_name in ParameterNames:
@@ -1539,7 +1539,7 @@ def formatString(par_format,par_value,lang='FORTRAN'):
 
 def formatGetLength(fmt,lang='FORTRAN'):
     regex = FORMAT_PYTHON_REGEX
-   
+
 def putRowObjectToString(RowObject):
     # serialize RowObject to string
     # TODO: support different languages (C,Fortran)
@@ -1554,26 +1554,26 @@ def putRowObjectToString(RowObject):
 
 # Parameter nicknames are hard-coded.
 PARAMETER_NICKNAMES = {
-    "a": "A", 
-    "gamma_air": "gair", 
-    "gp": "g", 
-    "local_iso_id": "I", 
-    "molec_id": "M", 
-    "sw": "S", 
-    "local_lower_quanta": "Q_", 
-    "local_upper_quanta": "Q", 
-    "gpp": "g_", 
-    "elower": "E_", 
-    "n_air": "nair", 
-    "delta_air": "dair", 
-    "global_upper_quanta": "V", 
-    "iref": "Iref", 
-    "line_mixing_flag": "f", 
-    "ierr": "ierr", 
-    "nu": "nu", 
-    "gamma_self": "gsel", 
+    "a": "A",
+    "gamma_air": "gair",
+    "gp": "g",
+    "local_iso_id": "I",
+    "molec_id": "M",
+    "sw": "S",
+    "local_lower_quanta": "Q_",
+    "local_upper_quanta": "Q",
+    "gpp": "g_",
+    "elower": "E_",
+    "n_air": "nair",
+    "delta_air": "dair",
+    "global_upper_quanta": "V",
+    "iref": "Iref",
+    "line_mixing_flag": "f",
+    "ierr": "ierr",
+    "nu": "nu",
+    "gamma_self": "gsel",
     "global_lower_quanta": "V_"
-}  
+}
 
 def putTableHeaderToString(TableName):
     output_string = ''
@@ -1645,7 +1645,7 @@ def getRowObjectFromString(input_string,TableName):
                 print('err')
                 raise Exception('Format \"%s\" is unknown' % par_format)
             RowObject.append((par_name,par_value,par_format))
-            pos += 1   
+            pos += 1
     return RowObject
 
 # Conversion between OBJECT_FORMAT and STORAGE_FORMAT
@@ -1658,8 +1658,8 @@ def cache2storage(TableName):
     #fullpath_data,fullpath_header = getFullTableAndHeaderName(TableName) # "lonely header" bug
     fullpath_data = VARIABLES['BACKEND_DATABASE_NAME'] + '/' + TableName + '.data' # bugfix
     fullpath_header = VARIABLES['BACKEND_DATABASE_NAME'] + '/' + TableName + '.header' # bugfix
-    OutfileData = open(fullpath_data,'w')
-    OutfileHeader = open(fullpath_header,'w')
+    OutfileData = open(fullpath_data,'w',newline='\n')
+    OutfileHeader = open(fullpath_header,'w',newline='\n')
     # write table data
     line_count = 1
     line_number = LOCAL_TABLE_CACHE[TableName]['header']['number_of_rows']
@@ -1671,14 +1671,14 @@ def cache2storage(TableName):
     # write table header
     TableHeader = getTableHeader(TableName)
     OutfileHeader.write(json.dumps(TableHeader,indent=2))
-    
+
 def storage2cache(TableName,cast=True,ext=None):
     """read speedup by Loeber"""
     #print 'storage2cache:'
     #print('TableName',TableName)
     fullpath_data,fullpath_header = getFullTableAndHeaderName(TableName,ext)
-    InfileData = open(fullpath_data,'r')
-    InfileHeader = open(fullpath_header,'r')
+    InfileData = open(fullpath_data,'r',newline='\n')
+    InfileHeader = open(fullpath_header,'r',newline='\n')
     #try:
     header_text = InfileHeader.read()
     try:
@@ -1711,7 +1711,7 @@ def storage2cache(TableName,cast=True,ext=None):
         for par_name in LOCAL_TABLE_CACHE[TableName]['header']['extra']:
             glob_default[par_name] = PARAMETER_META[par_name]['default_fmt']
             LOCAL_TABLE_CACHE[TableName]['data'][par_name] = []
-    
+
     header = LOCAL_TABLE_CACHE[TableName]['header']
     if 'extra' in header and header['extra']:
         line_count = 0
@@ -1752,7 +1752,7 @@ def storage2cache(TableName,cast=True,ext=None):
                 if dtype==float:
                     try:
                         return dtype(line[start:end])
-                    except ValueError: # possible D exponent instead of E 
+                    except ValueError: # possible D exponent instead of E
                         try:
                             return dtype(line[start:end].replace('D','E'))
                         except ValueError: # this is a special case and it should not be in the main version tree!
@@ -1770,12 +1770,12 @@ def storage2cache(TableName,cast=True,ext=None):
         data_matrix = [[cvt(line) for cvt in converters] for line in InfileData]
         data_columns = zip(*data_matrix)
         for qnt, col in zip(quantities, data_columns):
-            LOCAL_TABLE_CACHE[TableName]['data'][qnt].extend(col)               
+            LOCAL_TABLE_CACHE[TableName]['data'][qnt].extend(col)
             #LOCAL_TABLE_CACHE[TableName]['data'][qnt] = list(col)
             #LOCAL_TABLE_CACHE[TableName]['data'][qnt] = col
         header['number_of_rows'] = line_count = (
             len(LOCAL_TABLE_CACHE[TableName]['data'][quantities[0]]))
-    
+
     # Delete all character-separated values, treat them as column-fixed.
     try:
         del LOCAL_TABLE_CACHE[TableName]['header']['extra']
@@ -1790,9 +1790,9 @@ def storage2cache(TableName,cast=True,ext=None):
     InfileData.close()
     InfileHeader.close()
     print('                     Lines parsed: %d' % line_count)
-    pass    
-    
-## old version based on regular expressions    
+    pass
+
+## old version based on regular expressions
 #def storage2cache(TableName):
 #    fullpath_data,fullpath_header = getFullTableAndHeaderName(TableName)
 #    InfileData = open(fullpath_data,'r')
@@ -1852,8 +1852,8 @@ def storage2cache(TableName,cast=True,ext=None):
 #    print('                     Lines parsed: %d' % line_count)
 #    pass
 
-# / FORMAT CONVERSION LAYER    
-    
+# / FORMAT CONVERSION LAYER
+
 def getTableNamesFromStorage(StorageName):
     file_names = listdir(StorageName)
     table_names = []
@@ -1890,7 +1890,7 @@ def scanForNewParfiles(StorageName):
 
 def createHeader(TableName):
     fname = TableName+'.header'
-    fp = open(VARIABLES['BACKEND_DATABASE_NAME']+'/'+fname,'w')
+    fp = open(VARIABLES['BACKEND_DATABASE_NAME']+'/'+fname,'w',newline='\n')
     if os.path.isfile(TableName):
         raise Exception('File \"%s\" already exists!' % fname)
     fp.write(json.dumps(HITRAN_DEFAULT_HEADER,indent=2))
@@ -1942,7 +1942,7 @@ def databaseCommit():
 # ----------------------------------------------------
 # hierarchic query.condition language:
 # Conditions: CONS = ('and', ('=','p1','p2'), ('<','p1',13))
-# String literals are distinguished from variable names 
+# String literals are distinguished from variable names
 #  by using the operation ('STRING','some_string')
 # ----------------------------------------------------
 
@@ -1978,7 +1978,7 @@ def operationNOT(arg):
 
 def operationRANGE(x,x_min,x_max):
     return x_min <= x <= x_max
-    
+
 def operationSUBSET(arg1,arg2):
     # True if arg1 is subset of arg2
     # arg1 is an element
@@ -2022,7 +2022,7 @@ def operationEQUAL(args):
 
 def operationNOTEQUAL(arg1,arg2):
     return arg1 != arg2
-    
+
 def operationSUM(args):
     # any numbers of arguments
     if type(args[0]) in set([int,float]):
@@ -2094,7 +2094,7 @@ def operationLIST(args):
 
 # /operations
 
-# GROUPING ---------------------------------------------- 
+# GROUPING ----------------------------------------------
 
 GROUP_INDEX = {}
 # GROUP_INDEX has the following structure:
@@ -2246,7 +2246,7 @@ OPERATORS = {\
 # Group count
 'COUNT' : lambda args : groupCOUNT(GroupIndexKey),
 }
-    
+
 # new evaluateExpression function,
 #  accounting for groups
 """
@@ -2273,7 +2273,7 @@ def evaluateExpression(root,VarDictionary,GroupIndexKey=None):
        # call functions with evaluated arguments
        if head in set(['LIST']): # list arg
           return operationLIST(args)
-       elif head in set(['&','&&','AND']): # many args 
+       elif head in set(['&','&&','AND']): # many args
           return operationAND(args)
        elif head in set(['|','||','OR']): # many args
           return operationOR(args)
@@ -2317,7 +2317,7 @@ def evaluateExpression(root,VarDictionary,GroupIndexKey=None):
     elif type(root)==str:
        # root is a par_name
        return VarDictionary[root]
-    else: 
+    else:
        # root is a non-string constant
        return root
 """
@@ -2350,7 +2350,7 @@ def evaluateExpression(root,VarDictionary,GroupIndexKey=None):
     elif type(root)==str:
        # root is a par_name
        return VarDictionary[root]
-    else: 
+    else:
        # root is a non-string constant
        return root
 
@@ -2363,7 +2363,7 @@ def getVarDictionary(RowObject):
     return VarDictionary
 
 def checkRowObject(RowObject,Conditions,VarDictionary):
-    #VarDictionary = getVarDictionary(RowObject)   
+    #VarDictionary = getVarDictionary(RowObject)
     if Conditions:
        Flag = evaluateExpression(Conditions,VarDictionary)
     else:
@@ -2384,9 +2384,9 @@ def checkRowObject(RowObject,Conditions,VarDictionary):
 def operationBIND(parname,Expression,VarDictionary):
     pass
 
-# This section is for more detailed processing of parlists. 
+# This section is for more detailed processing of parlists.
 
-# Table creation must include not only subsets of 
+# Table creation must include not only subsets of
 #   existing parameters, but also new parameters
 #   derived from functions on a special prefix language
 # For this reason subsetOfRowObject(..) must be substituted
@@ -2396,7 +2396,7 @@ def operationBIND(parname,Expression,VarDictionary):
 
 # Get names from expression.
 #  Must merge this one with evaluateExrpression.
-# This is VERY LIMITED version of what will be 
+# This is VERY LIMITED version of what will be
 #  when make the language parser is implemented.
 # For more ideas and info see LANGUAGE_REFERENCE
 
@@ -2411,7 +2411,7 @@ def evaluateExpressionPAR(ParameterNames,VarDictionary=None):
     #      if element is an BIND expression: return bind name
     #              (see operationBIND)
     #   3) if element is an anonymous expression: return #N(=1,2,3...)
-    # N.B. Binds can be only on the 0-th level of Expression    
+    # N.B. Binds can be only on the 0-th level of Expression
     pass
 
 def getContextFormat(RowObject):
@@ -2432,7 +2432,7 @@ def getDefaultFormat(Type):
        return '%2d'
     else:
        raise Exception('Unknown type')
-     
+
 def getDefaultValue(Type):
     if Type is int:
        return 0
@@ -2452,7 +2452,7 @@ def getDefaultValue(Type):
 #  such as COUNT, AVG, MIN, MAX etc...
 
 def newRowObject(ParameterNames,RowObject,VarDictionary,ContextFormat,GroupIndexKey=None):
-    # Return a subset of RowObject according to 
+    # Return a subset of RowObject according to
     # ParameterNames include either par names
     #  or expressions containing par names literals
     # ContextFormat contains format for ParNames
@@ -2496,13 +2496,13 @@ def getTableList():
 
 def describeTable(TableName):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         TableName: name of the table to describe
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         none
     ---
     DESCRIPTION:
-        Print information about table, including 
+        Print information about table, including
         parameter names, formats and wavenumber range.
     ---
     EXAMPLE OF USAGE:
@@ -2531,7 +2531,7 @@ def outputTable(TableName,Conditions=None,File=None,Header=True):
     # Display or record table with condition checking
     if File:
        Header = False
-       OutputFile = open(File,'w')
+       OutputFile = open(File,'w',newline='\n')
     if Header:
        headstr = putTableHeaderToString(TableName)
        if File:
@@ -2565,7 +2565,7 @@ def createTable(TableName,RowObjectDefault):
         data[par_name] = []
     #header_order = tuple(header_order) # XXX ?
     LOCAL_TABLE_CACHE[TableName]['header']={}
-    LOCAL_TABLE_CACHE[TableName]['header']['order'] = header_order 
+    LOCAL_TABLE_CACHE[TableName]['header']['order'] = header_order
     LOCAL_TABLE_CACHE[TableName]['header']['format'] = header_format
     LOCAL_TABLE_CACHE[TableName]['header']['default'] = header_default
     LOCAL_TABLE_CACHE[TableName]['header']['number_of_rows'] = 0
@@ -2573,14 +2573,14 @@ def createTable(TableName,RowObjectDefault):
     LOCAL_TABLE_CACHE[TableName]['header']['table_name'] = TableName
     LOCAL_TABLE_CACHE[TableName]['header']['table_type'] = 'column-fixed'
     LOCAL_TABLE_CACHE[TableName]['data'] = data
-    
+
 
 # simple "drop table" capability
 def dropTable(TableName):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         TableName:  name of the table to delete
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         none
     ---
     DESCRIPTION:
@@ -2602,11 +2602,11 @@ def dropTable(TableName):
 # Returns a column corresponding to parameter name
 def getColumn(TableName,ParameterName):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         TableName:      source table name     (required)
         ParameterName:  name of column to get (required)
-    OUTPUT PARAMETERS: 
-        ColumnData:     list of values from specified column 
+    OUTPUT PARAMETERS:
+        ColumnData:     list of values from specified column
     ---
     DESCRIPTION:
         Returns a column with a name ParameterName from
@@ -2621,11 +2621,11 @@ def getColumn(TableName,ParameterName):
 # Returns a list of columns corresponding to parameter names
 def getColumns(TableName,ParameterNames):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         TableName:       source table name           (required)
         ParameterNames:  list of column names to get (required)
-    OUTPUT PARAMETERS: 
-        ListColumnData:   tuple of lists of values from specified column 
+    OUTPUT PARAMETERS:
+        ListColumnData:   tuple of lists of values from specified column
     ---
     DESCRIPTION:
         Returns columns with a names in ParameterNames from
@@ -2661,7 +2661,7 @@ def addColumn(TableName,ParameterName,Before=None,Expression=None,Type=None,Defa
            LOCAL_TABLE_CACHE[TableName]['data'][ParameterName] = data
     # Mess with header
     header_order = LOCAL_TABLE_CACHE[TableName]['header']['order']
-    if not Before: 
+    if not Before:
        header_order.append(ParameterName)
     else:
        #i = 0
@@ -2673,7 +2673,7 @@ def addColumn(TableName,ParameterName,Before=None,Expression=None,Type=None,Defa
     LOCAL_TABLE_CACHE[TableName]['header']['order'] = header_order
     LOCAL_TABLE_CACHE[TableName]['header']['format'][ParameterName] = Format
     LOCAL_TABLE_CACHE[TableName]['header']['default'][ParameterName] = Default
-   
+
 
 def deleteColumn(TableName,ParameterName):
     if ParameterName not in LOCAL_TABLE_CACHE[TableName]['header']['format']:
@@ -2717,7 +2717,7 @@ def selectInto(DestinationTableName,TableName,ParameterNames,Conditions):
     # check if Conditions contain elements which are not in the TableObject
     #condition_variables = getConditionVariables(Conditions)
     #strange_pars = set(condition_variables)-set(table_variables)
-    #if strange_pars: 
+    #if strange_pars:
     #   raise Exception('The following parameters are not in the table \"%s\"' % (TableName,list(strange_pars)))
     # do full scan each time
     if DestinationTableName == TableName:
@@ -2747,18 +2747,18 @@ def length(TableName):
 # Set File=FileName to redirect output to a file.
 def select(TableName,DestinationTableName=QUERY_BUFFER,ParameterNames=None,Conditions=None,Output=True,File=None):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         TableName:            name of source table              (required)
         DestinationTableName: name of resulting table           (optional)
         ParameterNames:       list of parameters or expressions (optional)
         Conditions:           list of logincal expressions      (optional)
         Output:   enable (True) or suppress (False) text output (optional)
         File:     enable (True) or suppress (False) file output (optional)
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         none
     ---
     DESCRIPTION:
-        Select or filter the data in some table 
+        Select or filter the data in some table
         either to standard output or to file (if specified)
     ---
     EXAMPLE OF USAGE:
@@ -2802,7 +2802,7 @@ def arrangeTable(TableName,DestinationTableName=None,RowIDList=None):
     for par_name in LOCAL_TABLE_CACHE[DestinationTableName]['header']['order']:
         par_data = LOCAL_TABLE_CACHE[TableName]['data'][par_name]
         LOCAL_TABLE_CACHE[DestinationTableName]['data'][par_name] = [par_data[i] for i in RowIDList]
-    
+
 def compareLESS(RowObject1,RowObject2,ParameterNames):
     #print 'CL/'
     # arg1 and arg2 are RowObjects
@@ -2844,8 +2844,8 @@ def quickSort(index,TableName,ParameterNames,Accending=True):
        lesser_index = []
        greater_index = [];
        for RowID in index[1:]:
-           RowObject = getRowObject(RowID,TableName)           
-           if compareLESS(RowObject,Pivot,ParameterNames): 
+           RowObject = getRowObject(RowID,TableName)
+           if compareLESS(RowObject,Pivot,ParameterNames):
               lesser_index += [RowID]
            else:
               greater_index += [RowID]
@@ -2859,14 +2859,14 @@ def quickSort(index,TableName,ParameterNames,Accending=True):
 # Sorting must work well on the table itself!
 def sort(TableName,DestinationTableName=None,ParameterNames=None,Accending=True,Output=False,File=None):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         TableName:                name of source table          (required)
         DestinationTableName:     name of resulting table       (optional)
         ParameterNames:       list of parameters or expressions to sort by    (optional)
         Accending:       sort in ascending (True) or descending (False) order (optional)
         Output:   enable (True) or suppress (False) text output (optional)
         File:     enable (True) or suppress (False) file output (optional)
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         none
     ---
     DESCRIPTION:
@@ -2892,7 +2892,7 @@ def sort(TableName,DestinationTableName=None,ParameterNames=None,Accending=True,
        outputTable(DestinationTableName,File=File)
 
 # /SORTING ==========================================================
-    
+
 
 # GROUPING ==========================================================
 
@@ -2911,14 +2911,14 @@ def sort(TableName,DestinationTableName=None,ParameterNames=None,Accending=True,
 
 def group(TableName,DestinationTableName=QUERY_BUFFER,ParameterNames=None,GroupParameterNames=None,Output=True):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         TableName:                name of source table          (required)
         DestinationTableName:     name of resulting table       (optional)
         ParameterNames:       list of parameters or expressions to take       (optional)
         GroupParameterNames:  list of parameters or expressions to group by   (optional)
         Accending:       sort in ascending (True) or descending (False) order (optional)
         Output:   enable (True) or suppress (False) text output (optional)
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         none
     ---
     DESCRIPTION:
@@ -2953,7 +2953,7 @@ def group(TableName,DestinationTableName=QUERY_BUFFER,ParameterNames=None,GroupP
     createTable(DestinationTableName,RowObjectDefaultNew)
     # Loop through rows of source Table
     # On each iteration group functions update GROUP_INDEX (see description above)
-    number_of_rows = LOCAL_TABLE_CACHE[TableName]['header']['number_of_rows']   
+    number_of_rows = LOCAL_TABLE_CACHE[TableName]['header']['number_of_rows']
     # STAGE 1: CREATE GROUPS
     print('LOOP:')
     for RowID in range(0,number_of_rows):
@@ -2967,7 +2967,7 @@ def group(TableName,DestinationTableName=QUERY_BUFFER,ParameterNames=None,GroupP
         GroupParameterNames_ = ['LIST'] + list(GroupParameterNames)
         GroupIndexKey = evaluateExpression(GroupParameterNames_,VarDictionary)
         # List is an unhashable type in Python!
-        GroupIndexKey = tuple(GroupIndexKey)       
+        GroupIndexKey = tuple(GroupIndexKey)
         initializeGroup(GroupIndexKey)
         print('GROUP_INDEX='+str(GROUP_INDEX))
         ContextFormat = getContextFormat(RowObject)
@@ -2985,7 +2985,7 @@ def group(TableName,DestinationTableName=QUERY_BUFFER,ParameterNames=None,GroupP
 REGEX_INTEGER = '[+-]?\d+'
 REGEX_STRING = '[^\s]+'
 REGEX_FLOAT_F = '[+-]?\d*\.?\d+'
-REGEX_FLOAT_E = '[+-]?\d*\.?\d+[eEfF]?[+-]?\d+' 
+REGEX_FLOAT_E = '[+-]?\d*\.?\d+[eEfF]?[+-]?\d+'
 
 REGEX_INTEGER_FIXCOL = lambda n: '\d{%d}' % n
 REGEX_STRING_FIXCOL = lambda n: '[^\s]{%d}' % n
@@ -2995,13 +2995,13 @@ REGEX_FLOAT_E_FIXCOL = lambda n: '[\+\-\.\deEfF]{%d}' % n
 # Extract sub-columns from string column
 def extractColumns(TableName,SourceParameterName,ParameterFormats,ParameterNames=None,FixCol=False):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         TableName:             name of source table              (required)
         SourceParameterName:   name of source column to process  (required)
         ParameterFormats:      c formats of unpacked parameters  (required)
         ParameterNames:        list of resulting parameter names (optional)
         FixCol:      column-fixed (True) format of source column (optional)
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         none
     ---
     DESCRIPTION:
@@ -3047,10 +3047,10 @@ def extractColumns(TableName,SourceParameterName,ParameterFormats,ParameterNames
        raise Exception('Parameters %s already exist' % str(list(Intersection)))
     # loop over ParameterNames to prepare LOCAL_TABLE_CACHE
     i=0
-    for par_name in ParameterNames:  
-        par_format = ParameterFormats[i]     
+    for par_name in ParameterNames:
+        par_format = ParameterFormats[i]
         LOCAL_TABLE_CACHE[TableName]['header']['format'][par_name]=par_format
-        LOCAL_TABLE_CACHE[TableName]['data'][par_name]=[] 
+        LOCAL_TABLE_CACHE[TableName]['data'][par_name]=[]
         i+=1
     # append new parameters in order list
     LOCAL_TABLE_CACHE[TableName]['header']['order'] += ParameterNames
@@ -3204,7 +3204,7 @@ PARLIST_HT_AIR = ['gamma_HT_0_air_296','n_HT_air_296','gamma_HT_2_air_296',
                   'delta_HT_0_air_296','deltap_HT_air_296','delta_HT_2_air_296',
                   'nu_HT_air','kappa_HT_air','eta_HT_air']
 PARLIST_HT_ALL = mergeParlist(PARLIST_HT_SELF,PARLIST_HT_AIR)
-                                   
+
 PARLIST_ALL = mergeParlist(PARLIST_ID,PARLIST_DOTPAR,PARLIST_STANDARD,
                            PARLIST_LABELS,PARLIST_LINEMIXING,PARLIST_VOIGT_ALL,
                            PARLIST_SDVOIGT_ALL,PARLIST_GALATRY_ALL,PARLIST_HT_ALL)
@@ -3245,38 +3245,38 @@ def prepareParlist(pargroups=[],params=[],dotpar=True):
     if dotpar:
         parlist_default += ['par_line']
     #parlist_default += PARAMETER_GROUPS['id']
-    
+
     # Make a dictionary of "assumed" parameters.
     ASSUMED_PARAMS = {}
     if 'par_line' in set(parlist_default):
         ASSUMED_PARAMS = HITRAN_DEFAULT_HEADER['format']
-    
+
     parlist = parlist_default
-    
+
     # Iterate over parameter groups.
     for pargroup in pargroups:
         pargroup = pargroup.lower()
         parlist += PARAMETER_GROUPS[pargroup]
-        
+
     # Iterate over single parameters.
     for param in params:
         param = param.lower()
         parlist.append(param)
-        
+
     # Clean up parameter list.
     parlist = mergeParlist(parlist)
     result = []
     for param in parlist:
         if param not in ASSUMED_PARAMS:
             result.append(param)
-    
+
     return result
 
 def prepareHeader(parlist):
     HEADER = {'table_name':'','number_of_rows':-1,'format':{},
               'default':{},'table_type':'column-fixed',
               'size_in_bytes':-1,'order':[],'description':{}}
-    
+
     # Add column-fixed 160-character part, if specified in parlist.
     if 'par_line' in set(parlist):
         HEADER['order'] = HITRAN_DEFAULT_HEADER['order']
@@ -3294,9 +3294,9 @@ def prepareHeader(parlist):
         #param = param.lower()
         HEADER['extra'].append(param)
         HEADER['extra_format'][param] = PARAMETER_META[param]['default_fmt']
-        
+
     return HEADER
-        
+
 def queryHITRAN(TableName,iso_id_list,numin,numax,pargroups=[],params=[],dotpar=True,head=False):
     ParameterList = prepareParlist(pargroups=pargroups,params=params,dotpar=dotpar)
     TableHeader = prepareHeader(ParameterList)
@@ -3331,13 +3331,13 @@ def queryHITRAN(TableName,iso_id_list,numin,numax,pargroups=[],params=[],dotpar=
         raise Exception('Cannot connect to %s. Try again or edit GLOBAL_HOST variable.' % GLOBAL_HOST)
     CHUNK = 64 * 1024
     print('BEGIN DOWNLOAD: '+TableName)
-    with open(DataFileName,'w') as fp:
+    with open(DataFileName,'w',newline='\n') as fp:
        while True:
           chunk = req.read(CHUNK)
           if not chunk: break
           fp.write(chunk.decode('utf-8'))
           print('  %d bytes written to %s' % (CHUNK,DataFileName))
-    with open(HeaderFileName,'w') as fp:       
+    with open(HeaderFileName,'w',newline='\n') as fp:
        fp.write(json.dumps(TableHeader,indent=2))
        print('Header written to %s' % HeaderFileName)
     print('END DOWNLOAD')
@@ -3347,16 +3347,16 @@ def queryHITRAN(TableName,iso_id_list,numin,numax,pargroups=[],params=[],dotpar=
     print('PROCESSED')
 
 def saveHeader(TableName):
-    ParameterList = prepareParlist(dotpar=True)    
+    ParameterList = prepareParlist(dotpar=True)
     TableHeader = prepareHeader(ParameterList)
-    with open(TableName+'.header','w') as fp:
+    with open(TableName+'.header','w',newline='\n') as fp:
        fp.write(json.dumps(TableHeader,indent=2))
-    
-# NODE CODE 
+
+# NODE CODE
 NODE_READY = False
 
 # Node initialization
-def nodeInit(): 
+def nodeInit():
     # very unoptimal, since it loads all tables in memory!!
     databaseBegin() # DB backend level, start transaction
     NODE_READY = True
@@ -3365,7 +3365,7 @@ def nodeInit():
 def globalSelectInto(NewTablePath,SourceTablePath,ParameterNames,Conditions):
     # creates table from parsed data
     # and store it in the database DB
-    
+
     dbname,tablename,nodename = NewTablePath.split('::')
     dbname1,tablename1,nodename1 = SourceTablePath.split('::')
 
@@ -3378,7 +3378,7 @@ def globalSelectInto(NewTablePath,SourceTablePath,ParameterNames,Conditions):
 
 # ---------------------------------------------------------------
 
-# query_string - query written in the 
+# query_string - query written in the
 # formal language of local database frontend
 def makeQuery(query_string,Connection=GLOBAL_CONNECTION):
     # makes a query to remote server
@@ -3420,7 +3420,7 @@ ISO_ID_INDEX = {
 #    id           M    I    iso_name                    abundance           mass        mol_name
 
 ISO_ID = {
-                            
+
       1 : [       1,   1,  'H2(16O)',                   0.997317,           18.010565,      'H2O'     ],
       2 : [       1,   2,  'H2(18O)',                   0.00199983,         20.014811,      'H2O'     ],
       3 : [       1,   3,  'H2(17O)',                   0.000372,           19.01478,       'H2O'     ],
@@ -3540,10 +3540,10 @@ ISO_ID = {
      98 : [      46,   2,  '(12C)(34S)',                0.0416817,          45.966787,      'CS'      ],
      99 : [      46,   3,  '(13C)(32S)',                0.0105565,          44.974368,      'CS'      ],
     100 : [      46,   4,  '(12C)(33S)',                0.00741668,         44.970399,      'CS'      ],
-    114 : [      47,   1,  '(32S)(16O)3',               0.9423964,          79.95682,       'SO3'     ],    
+    114 : [      47,   1,  '(32S)(16O)3',               0.9423964,          79.95682,       'SO3'     ],
     123 : [      48,   1,  '(12C)2(14N)2',              0.970752433,        52.006148,      'C2N2'    ],
     124 : [      49,   1,  '(12C)(16O)(35Cl)2',         0.566391761,        97.9326199796,  'COCl2'   ],
-    125 : [      49,   2,  '(12C)(16O)(35Cl)(37Cl)',    0.362235278,        99.9296698896,  'COCl2'   ],    
+    125 : [      49,   2,  '(12C)(16O)(35Cl)(37Cl)',    0.362235278,        99.9296698896,  'COCl2'   ],
     101 : [    1001,   1,  'H',                         None,               None,           'H'       ],
     102 : [    1002,   1,  'He',                        None,               None,           'He'      ],
     104 : [    1018,   1,  'Ar',                        None,               None,           'Ar'      ],
@@ -3563,7 +3563,7 @@ ISO_INDEX = {
 #        M    I             id    iso_name                    abundance           mass        mol_name
 
 ISO = {
-                            
+
 (        1,   1    ): [      1,  'H2(16O)',                   0.997317,           18.010565,      'H2O'     ],
 (        1,   2    ): [      2,  'H2(18O)',                   0.00199983,         20.014811,      'H2O'     ],
 (        1,   3    ): [      3,  'H2(17O)',                   0.000372,           19.01478,       'H2O'     ],
@@ -3752,29 +3752,29 @@ AUTHOR: Stavros Korokithakis
 
 PRELIMINARY STUFF
 
-So, you want to learn the Python programming language but can't find a concise 
-and yet full-featured tutorial. This tutorial will attempt to teach you Python in 10 minutes. 
-It's probably not so much a tutorial as it is a cross between a tutorial and a cheatsheet, 
-so it will just show you some basic concepts to start you off. Obviously, if you want to 
-really learn a language you need to program in it for a while. I will assume that you are 
-already familiar with programming and will, therefore, skip most of the non-language-specific stuff. 
-The important keywords will be highlighted so you can easily spot them. Also, pay attention because, 
-due to the terseness of this tutorial, some things will be introduced directly in code and only 
+So, you want to learn the Python programming language but can't find a concise
+and yet full-featured tutorial. This tutorial will attempt to teach you Python in 10 minutes.
+It's probably not so much a tutorial as it is a cross between a tutorial and a cheatsheet,
+so it will just show you some basic concepts to start you off. Obviously, if you want to
+really learn a language you need to program in it for a while. I will assume that you are
+already familiar with programming and will, therefore, skip most of the non-language-specific stuff.
+The important keywords will be highlighted so you can easily spot them. Also, pay attention because,
+due to the terseness of this tutorial, some things will be introduced directly in code and only
 briefly commented on.
 
 
 PROPERTIES
 
-Python is strongly typed (i.e. types are enforced), dynamically, implicitly typed (i.e. you don't 
-have to declare variables), case sensitive (i.e. var and VAR are two different variables) and 
-object-oriented (i.e. everything is an object). 
+Python is strongly typed (i.e. types are enforced), dynamically, implicitly typed (i.e. you don't
+have to declare variables), case sensitive (i.e. var and VAR are two different variables) and
+object-oriented (i.e. everything is an object).
 
 
 GETTING HELP
 
-Help in Python is always available right in the interpreter. If you want to know how an object works, 
-all you have to do is call help(<object>)! Also useful are dir(), which shows you all the object's methods, 
-and <object>.__doc__, which shows you its documentation string: 
+Help in Python is always available right in the interpreter. If you want to know how an object works,
+all you have to do is call help(<object>)! Also useful are dir(), which shows you all the object's methods,
+and <object>.__doc__, which shows you its documentation string:
 
 >>> help(5)
 Help on int object:
@@ -3791,13 +3791,13 @@ Return the absolute value of the argument.'
 
 SYNTAX
 
-Python has no mandatory statement termination characters and blocks are specified by indentation. 
-Indent to begin a block, dedent to end one. Statements that expect an indentation level end in a colon (:). 
-Comments start with the pound (#) sign and are single-line, multi-line strings are used for multi-line comments. 
-Values are assigned (in fact, objects are bound to names) with the _equals_ sign ("="), and equality testing is 
-done using two _equals_ signs ("=="). You can increment/decrement values using the += and -= operators respectively 
-by the right-hand amount. This works on many datatypes, strings included. You can also use multiple variables on one 
-line. For example: 
+Python has no mandatory statement termination characters and blocks are specified by indentation.
+Indent to begin a block, dedent to end one. Statements that expect an indentation level end in a colon (:).
+Comments start with the pound (#) sign and are single-line, multi-line strings are used for multi-line comments.
+Values are assigned (in fact, objects are bound to names) with the _equals_ sign ("="), and equality testing is
+done using two _equals_ signs ("=="). You can increment/decrement values using the += and -= operators respectively
+by the right-hand amount. This works on many datatypes, strings included. You can also use multiple variables on one
+line. For example:
 
 >>> myvar = 3
 >>> myvar += 2
@@ -3825,13 +3825,13 @@ Hello world.
 
 DATA TYPES
 
-The data structures available in python are lists, tuples and dictionaries. 
-Sets are available in the sets library (but are built-in in Python 2.5 and later). 
-Lists are like one-dimensional arrays (but you can also have lists of other lists), 
-dictionaries are associative arrays (a.k.a. hash tables) and tuples are immutable 
-one-dimensional arrays (Python "arrays" can be of any type, so you can mix e.g. integers, 
-strings, etc in lists/dictionaries/tuples). The index of the first item in all array types is 0. 
-Negative numbers count from the end towards the beginning, -1 is the last item. Variables 
+The data structures available in python are lists, tuples and dictionaries.
+Sets are available in the sets library (but are built-in in Python 2.5 and later).
+Lists are like one-dimensional arrays (but you can also have lists of other lists),
+dictionaries are associative arrays (a.k.a. hash tables) and tuples are immutable
+one-dimensional arrays (Python "arrays" can be of any type, so you can mix e.g. integers,
+strings, etc in lists/dictionaries/tuples). The index of the first item in all array types is 0.
+Negative numbers count from the end towards the beginning, -1 is the last item. Variables
 can point to functions. The usage is as follows:
 
 >>> sample = [1, ["another", "list"], ("a", "tuple")]
@@ -3846,8 +3846,8 @@ can point to functions. The usage is as follows:
 3
 
 
-You can access array ranges using a colon (:). Leaving the start index empty assumes the first item, 
-leaving the end index assumes the last item. Negative indexes count from the last item backwards 
+You can access array ranges using a colon (:). Leaving the start index empty assumes the first item,
+leaving the end index assumes the last item. Negative indexes count from the last item backwards
 (thus -1 is the last item) like so:
 
 >>> mylist = ["List item 1", 2, 3.14]
@@ -3873,12 +3873,12 @@ leaving the end index assumes the last item. Negative indexes count from the las
 
 STRINGS
 
-Its strings can use either single or double quotation marks, and you can have quotation 
-marks of one kind inside a string that uses the other kind (i.e. "He said 'hello'." is valid). 
-Multiline strings are enclosed in _triple double (or single) quotes_ (\"\"\"). 
-Python supports Unicode out of the box, using the syntax u"This is a unicode string". 
-To fill a string with values, you use the % (modulo) operator and a tuple. 
-Each %s gets replaced with an item from the tuple, left to right, and you can also use 
+Its strings can use either single or double quotation marks, and you can have quotation
+marks of one kind inside a string that uses the other kind (i.e. "He said 'hello'." is valid).
+Multiline strings are enclosed in _triple double (or single) quotes_ (\"\"\").
+Python supports Unicode out of the box, using the syntax u"This is a unicode string".
+To fill a string with values, you use the % (modulo) operator and a tuple.
+Each %s gets replaced with an item from the tuple, left to right, and you can also use
 dictionary substitutions, like so:
 
 >>>print "Name: %s\
@@ -3900,8 +3900,8 @@ This is a test.
 
 FLOW CONTROL STATEMENTS
 
-Flow control statements are if, for, and while. There is no select; instead, use if. 
-Use for to enumerate through members of a list. To obtain a list of numbers, 
+Flow control statements are if, for, and while. There is no select; instead, use if.
+Use for to enumerate through members of a list. To obtain a list of numbers,
 use range(<number>). These statements' syntax is thus:
 
 rangelist = range(10)
@@ -3938,14 +3938,14 @@ rangelist = range(10)
 
 FUNCTIONS
 
-Functions are declared with the "def" keyword. Optional arguments are set in 
-the function declaration after the mandatory arguments by being assigned a default 
-value. For named arguments, the name of the argument is assigned a value. 
-Functions can return a tuple (and using tuple unpacking you can effectively return 
-multiple values). Lambda functions are ad hoc functions that are comprised of 
-a single statement. Parameters are passed by reference, but immutable types (tuples, 
-ints, strings, etc) *cannot be changed*. This is because only the memory location of 
-the item is passed, and binding another object to a variable discards the old one, 
+Functions are declared with the "def" keyword. Optional arguments are set in
+the function declaration after the mandatory arguments by being assigned a default
+value. For named arguments, the name of the argument is assigned a value.
+Functions can return a tuple (and using tuple unpacking you can effectively return
+multiple values). Lambda functions are ad hoc functions that are comprised of
+a single statement. Parameters are passed by reference, but immutable types (tuples,
+ints, strings, etc) *cannot be changed*. This is because only the memory location of
+the item is passed, and binding another object to a variable discards the old one,
 so immutable types are replaced. For example:
 
 # Same as def funcvar(x): return x + 1
@@ -3974,10 +3974,10 @@ so immutable types are replaced. For example:
 
 CLASSES
 
-Python supports a limited form of multiple inheritance in classes. 
-Private variables and methods can be declared (by convention, this is not enforced 
-by the language) by adding at least two leading underscores and at most one trailing 
-one (e.g. "__spam"). We can also bind arbitrary names to class instances. 
+Python supports a limited form of multiple inheritance in classes.
+Private variables and methods can be declared (by convention, this is not enforced
+by the language) by adding at least two leading underscores and at most one trailing
+one (e.g. "__spam"). We can also bind arbitrary names to class instances.
 An example follows:
 
 >>> class MyClass(object):
@@ -4082,8 +4082,8 @@ We're done with that.
 
 IMPORTING:
 
-External libraries are used with the import [libname] keyword. 
-You can also use from [libname] import [funcname] for individual functions. 
+External libraries are used with the import [libname] keyword.
+You can also use from [libname] import [funcname] for individual functions.
 Here is an example:
 
 >>> import random
@@ -4096,7 +4096,7 @@ Here is an example:
 
 FILE I/O
 
-Python has a wide array of libraries built in. As an example, here is how serializing 
+Python has a wide array of libraries built in. As an example, here is how serializing
 (converting data structures to strings using the pickle library) with file I/O is used:
 
 >>> import pickle
@@ -4127,12 +4127,12 @@ Python has a wide array of libraries built in. As an example, here is how serial
 
 MISCELLANEOUS
 
-    -> Conditions can be chained. 1 < a < 3 checks 
+    -> Conditions can be chained. 1 < a < 3 checks
        that a is both less than 3 and greater than 1.
     -> You can use del to delete variables or items in arrays.
-    -> List comprehensions provide a powerful way to create 
-       and manipulate lists. They consist of an expression 
-       followed by a for clause followed by zero or more 
+    -> List comprehensions provide a powerful way to create
+       and manipulate lists. They consist of an expression
+       followed by a for clause followed by zero or more
        if or for clauses, like so:
 
 >>> lst1 = [1, 2, 3]
@@ -4163,12 +4163,12 @@ True
 
 
 
-    -> Global variables are declared outside of functions 
-       and can be read without any special declarations, 
-       but if you want to write to them you must declare them 
-       at the beginning of the function with the "global" keyword, 
-       otherwise Python will bind that object to a new local 
-       variable (be careful of that, it's a small catch that can 
+    -> Global variables are declared outside of functions
+       and can be read without any special declarations,
+       but if you want to write to them you must declare them
+       at the beginning of the function with the "global" keyword,
+       otherwise Python will bind that object to a new local
+       variable (be careful of that, it's a small catch that can
        get you if you don't know it). For example:
 
 >>> number = 5
@@ -4193,12 +4193,12 @@ True
 
 EPILOGUE
 
-This tutorial is not meant to be an exhaustive list of all (or even a subset) of Python. 
-Python has a vast array of libraries and much much more functionality which you will 
-have to discover through other means, such as the excellent book Dive into Python. 
-I hope I have made your transition in Python easier. Please leave comments if you believe 
-there is something that could be improved or added or if there is anything else 
-you would like to see (classes, error handling, anything). 
+This tutorial is not meant to be an exhaustive list of all (or even a subset) of Python.
+Python has a vast array of libraries and much much more functionality which you will
+have to discover through other means, such as the excellent book Dive into Python.
+I hope I have made your transition in Python easier. Please leave comments if you believe
+there is something that could be improved or added or if there is anything else
+you would like to see (classes, error handling, anything).
 
 """
 def print_python_tutorial():
@@ -4216,18 +4216,18 @@ Welcome to tutorial on retrieving and processing the data from HITRANonline.
  /// PREFACE ///
 ///////////////
 
-HITRANonline API is a set of routines in Python which is aimed to 
-provide a remote access to functionality and data given by a new project 
+HITRANonline API is a set of routines in Python which is aimed to
+provide a remote access to functionality and data given by a new project
 HITRANonline (http://hitranazure.cloudapp.net).
 
-At the present moment the API can download, filter and process data on 
+At the present moment the API can download, filter and process data on
 molecular and atomic line-by-line spectra which is provided by HITRANonline portal.
 
-One of the major purposes of introducing API is extending a functionality 
-of the main site, particularly providing a possibility to calculate several 
-types of high- and low-resolution spectra based on a flexible HT lineshape. 
+One of the major purposes of introducing API is extending a functionality
+of the main site, particularly providing a possibility to calculate several
+types of high- and low-resolution spectra based on a flexible HT lineshape.
 
-Each feature of API is represented by a Python function with a set of parameters 
+Each feature of API is represented by a Python function with a set of parameters
 providing a flexible approach to the task.
 
 
@@ -4237,30 +4237,30 @@ providing a flexible approach to the task.
 
 1) Downloading line-by-line data from the HITRANonline site to local database.
 2) Filtering and processing the data in SQL-like fashion.
-3) Conventional Python structures (lists, tuples, dictionaries) for representing 
+3) Conventional Python structures (lists, tuples, dictionaries) for representing
    a spectroscopic data.
 4) Possibility to use a large set of third-party Python libraries to work with a data
 5) Python implementation of an HT (Hartmann-Tran [1]) lineshape which is used in spectra.
-   simulations. This lineshape can also be reduced to a number of conventional 
-   line profiles such as Gaussian (Doppler), Lorentzian, Voigt, Rautian, 
+   simulations. This lineshape can also be reduced to a number of conventional
+   line profiles such as Gaussian (Doppler), Lorentzian, Voigt, Rautian,
    Speed-dependent Voigt and Rautian.
-6) Python implementation of total internal partition sums (TIPS-2011 [2]) 
+6) Python implementation of total internal partition sums (TIPS-2011 [2])
    which is used in spectra simulations.
-7) High-resolution spectra simulation accounting pressure, 
-   temperature and optical path length. The following spectral functions 
+7) High-resolution spectra simulation accounting pressure,
+   temperature and optical path length. The following spectral functions
    can be calculated:
       a) absorption coefficient
       b) absorption spectrum
       c) transmittance spectrum
       d) radiance spectrum
 8) Low-resolution spectra simulation using a number of apparatus functions.
-9) Possibility to extend with the user's functionality by adding custom lineshapes, 
+9) Possibility to extend with the user's functionality by adding custom lineshapes,
    partitions sums and apparatus functions.
 
 References:
 
 [1] N.H. Ngo, D. Lisak, H. Tran, J.-M. Hartmann.
-    An isolated line-shape model to go beyond the Voigt profile in 
+    An isolated line-shape model to go beyond the Voigt profile in
     spectroscopic databases and radiative transfer codes.
     JQSRT, Volume 129, November 2013, Pages 89–100
     http://dx.doi.org/10.1016/j.jqsrt.2013.05.034
@@ -4276,7 +4276,7 @@ _______________________________________________________________________
 This tutorial will give you an insight of how to use HAPI for Python.
 
 First, let's choose a folder for our local database. Every time you start
-your Python project, you have to specify explicitly the name of the 
+your Python project, you have to specify explicitly the name of the
 database folder.
 
 >>> db_begin('data')
@@ -4286,12 +4286,12 @@ Suppose that we want to get line by line data on the main isotopologue of H2O.
 
 For retrieving the data to the local database, user have to specify the following parameters:
 1) Name of the local table which will store the downloaded data.
-2) Either a pair of molecule and isotopologue HITRAN numbers (M and I), 
+2) Either a pair of molecule and isotopologue HITRAN numbers (M and I),
    or a "global" isotopologue ID (iso_id).
 3) Wavenumber range (nu_min and nu_max)
 
-N.B. If you specify the name which already exists in the database, 
-the existing table with that name will be overrided. 
+N.B. If you specify the name which already exists in the database,
+the existing table with that name will be overrided.
 
 To get additional information on function fetch,
 call getHelp:
@@ -4323,7 +4323,7 @@ folder. The new plain text file should have a name "H2O.data" and
 it should contain line-by-line data in HITRAN format.
 
 N.B. If we want several isotopologues in one table, we should
-use fetch_by_ids instead of just fetch. Fetch_by_ids takes a "global" 
+use fetch_by_ids instead of just fetch. Fetch_by_ids takes a "global"
 isotopologue ID numbers as an input instead of HITRAN's "local" identification.
 See getHelp(fetch_by_ids) to get more information on this.
 
@@ -4337,7 +4337,7 @@ To learn about the table we just downloaded, let's use a function "describeTable
 -----------------------------------------
 H2O summary:
 -----------------------------------------
-Comment: 
+Comment:
 Contains lines for H2(16O)
  in 3400.000-4100.000 wavenumber range
 Number of rows: 7524
@@ -4366,15 +4366,15 @@ Table type: column-fixed
                  gpp                %7.1f
 -----------------------------------------
 
-This output tells how many rows are currenty in the table H2O, which 
-wavenumber range was used by fetch(). Also this gives a basic information 
+This output tells how many rows are currenty in the table H2O, which
+wavenumber range was used by fetch(). Also this gives a basic information
 about parameters stored in the table.
 
 So, having the table downloaded, one can perform different operations on it
 using API.
 
 Here is a list of operations currently available with API:
-1) FILTERING 
+1) FILTERING
 2) OUTPUTTING
 3) SORTING
 4) GROUPING
@@ -4399,11 +4399,11 @@ This will display the list of line parameters containing in the table "H2O".
 That's the simplest way of using the function select(). Full information
 on control parameters can be obtained via getHelp(select) statement.
 
-Suppose that we need a lines from a table within some wavenumber range. 
+Suppose that we need a lines from a table within some wavenumber range.
 That's what filtering is for. Let's apply a simple range filter on a table.
 
 >>> select('H2O',Conditions=('between','nu',4000,4100))
-MI          nu         S         A gair gsel        E_nair    dair     
+MI          nu         S         A gair gsel        E_nair    dair
  11 4000.188800 1.513E-25 1.105E-02.03340.298 1581.33570.51-.013910 ...
  11 4000.204070 3.482E-24 8.479E-03.08600.454  586.47920.61-.007000 ...
  11 4000.469910 3.268E-23 1.627E+00.05410.375 1255.91150.56-.013050 ...
@@ -4413,16 +4413,16 @@ As a result of this operation, we see a list of lines of H2O table,
 whose wavenumbers lie between 4000 cm-1 and 4100 cm-1.
 The condition is taken as an input parameter to API function "select".
 
-To specify a subset of columns to display, use another control parameter - 
+To specify a subset of columns to display, use another control parameter -
 ParameterNames:
 
 >>> select('H2O',ParameterNames=('nu','sw'),Conditions=('between','nu',4000,4100))
 
-The usage of ParameterNames is outlined below in the section "Specifying a list 
-of parameters". So far it worth mentioning that this parameter is a part 
+The usage of ParameterNames is outlined below in the section "Specifying a list
+of parameters". So far it worth mentioning that this parameter is a part
 of a powerful tool for displaying and processing tables from database.
 
-In the next section we will show how to create quieries 
+In the next section we will show how to create quieries
 with more complex conditions.
 
 
@@ -4436,12 +4436,12 @@ as follows:
                     ('between','nu',4000,4100)
 
 Thus, this is a python list (or tuple), containing logical expressions
-defined under column names of the table. For example, 'nu' is a name of 
+defined under column names of the table. For example, 'nu' is a name of
 the column in 'H2O' table, and this column contains a transition wavenumber.
 The structure of a simple condition is as follows:
 
                     (OPERATION,ARG1,ARG2,...)
-                    
+
 Where OPERATION must be in a set of predefined operations (see below),
 and ARG1,ARG2 etc. are the arguments for this operation.
 Conditions can be nested, i.e. ARG can itself be a condition (see examples).
@@ -4472,17 +4472,17 @@ Search single match: 'SEARCH':                  ('SEARCH','\d \d \d','1 2 3 4')
 Search all matches:  'FINDALL':                 ('FINDALL','\d','1 2 3 4 5')
 Count within group:  'COUNT' :                  ('COUNT','local_iso_id')
 ---------------------------------------------------------------------------------
-   
-Let's create a query with more complex condition. Suppese that we are 
+
+Let's create a query with more complex condition. Suppese that we are
 interested in all lines between 3500 and 4000 with 1e-19 intensity cutoff.
 The query will look like this:
 
 >>> Cond = ('AND',('BETWEEN','nu',3500,4000),('>=','Sw',1e-19))
 >>> select('H2O',Conditions=Cond,DestinationTableName='tmp')
 
-Here, apart from other parameters, we have used a new parameter 
+Here, apart from other parameters, we have used a new parameter
 DestinationTableName. This parameter contains a name of the table
-where we want to put a result of the query. Thus we have chosen 
+where we want to put a result of the query. Thus we have chosen
 a name 'tmp' for a new table.
 
 
@@ -4518,18 +4518,18 @@ Suppose that we want not only select a set of parameters/columns
 from a table, but do a certain transformations with them (for example,
 multiply column on a coefficient, or add one column to another etc...).
 We can make it in two ways. First, we can extract a column from table
-using one of the functions (getColumn or getColumns) and do the rest 
+using one of the functions (getColumn or getColumns) and do the rest
 in Python. The second way is to do it on the level of select.
-The select function has a control parameter "ParameterNames", which 
-makes it possible to specify parameters we want to be selected, 
+The select function has a control parameter "ParameterNames", which
+makes it possible to specify parameters we want to be selected,
 and evaluate some simple arithmetic expressions with them.
 
 Assume that we need only wavenumber and intensity from H2O table.
 Also we need to scale an intensity to the unitary abundance. To do so,
-we must divide an 'sw' parameter by it's natural abundance (0.99731) for 
+we must divide an 'sw' parameter by it's natural abundance (0.99731) for
 principal isotopologue of water).
 
-Thus, we have to select two columns:  
+Thus, we have to select two columns:
 wavenumber (nu) and scaled intensity (sw/0.99731)
 >>> select('H2O',)
 
@@ -4538,9 +4538,9 @@ wavenumber (nu) and scaled intensity (sw/0.99731)
  /// SAVING QUERY TO DISK ///
 ////////////////////////////
 
-To quickly save a result of a query to disk, the user can take an 
+To quickly save a result of a query to disk, the user can take an
 advantage of an additional parameter "File".
-If this parameter is presented in function call, then the query is 
+If this parameter is presented in function call, then the query is
 saved to file with the name which was specified in "File".
 
 For example, select all lines from H2O and save the result in file 'H2O.txt':
@@ -4570,7 +4570,7 @@ molecule-isotopologue notation:
 5) ISO_ID
 >>> getHelp(ISO_ID)
 
-The latter is a dictionary, which contain all information about 
+The latter is a dictionary, which contain all information about
 isotopologues concentrated in one place.
 
 """
@@ -4590,36 +4590,36 @@ Welcome to tutorial on calculating a spectra from line-by-line data.
 ///////////////
 
 This tutorial will demonstrate how to use different lineshapes and partition
-functions, and how to calculate synthetic spectra with respect to different 
-instruments. It will be shown how to combine different parameters of spectral 
+functions, and how to calculate synthetic spectra with respect to different
+instruments. It will be shown how to combine different parameters of spectral
 calculation to achieve better precision and performance for cross sections.
 
 API provides a powerful tool to calculate cross-sections based on line-by-line
 data containing in HITRAN. This features:
 
-*) Python implementation of an HT (Hartmann-Tran [1]) lineshape which is used in 
-   spectra simulations. This lineshape can also be reduced to a number of 
-   conventional    line profiles such as Gaussian (Doppler), Lorentzian, Voigt, 
+*) Python implementation of an HT (Hartmann-Tran [1]) lineshape which is used in
+   spectra simulations. This lineshape can also be reduced to a number of
+   conventional    line profiles such as Gaussian (Doppler), Lorentzian, Voigt,
    Rautian, Speed-dependent Voigt and Rautian.
-*) Python implementation of total internal partition sums (TIPS-2011 [2]) 
+*) Python implementation of total internal partition sums (TIPS-2011 [2])
    which is used in spectra simulations.
-*) High-resolution spectra simulation accounting pressure, 
-   temperature and optical path length. The following spectral functions 
+*) High-resolution spectra simulation accounting pressure,
+   temperature and optical path length. The following spectral functions
    can be calculated:
       a) absorption coefficient
       b) absorption spectrum
       c) transmittance spectrum
       d) radiance spectrum
 *) Low-resolution spectra simulation using a number of apparatus functions.
-*) Possibility to extend with the user's functionality by adding custom lineshapes, 
+*) Possibility to extend with the user's functionality by adding custom lineshapes,
    partitions sums and apparatus functions.
-*) An approach to function code is aimed to be flexible enough yet hopefully 
+*) An approach to function code is aimed to be flexible enough yet hopefully
    intuitive.
 
 References:
 
 [1] N.H. Ngo, D. Lisak, H. Tran, J.-M. Hartmann.
-    An isolated line-shape model to go beyond the Voigt profile in 
+    An isolated line-shape model to go beyond the Voigt profile in
     spectroscopic databases and radiative transfer codes.
     JQSRT, Volume 129, November 2013, Pages 89–100
     http://dx.doi.org/10.1016/j.jqsrt.2013.05.034
@@ -4629,7 +4629,7 @@ References:
     Icarus, Volume 215, Issue 1, September 2011, Pages 391–400
     http://dx.doi.org/10.1016/j.icarus.2011.06.004
 
-            
+
   ///////////////////////////
  /// USING LINE PROFILES ///
 ///////////////////////////
@@ -4664,7 +4664,7 @@ of them just by calling getHelp(ProfileName):
 Line profiles, adapted for using with HAPI, are written in Python and
 heavily using the numerical library "Numpy". This means that the user
 can calculate multiple values of particular profile at once having just
-pasted a numpy array as a wavenumber grid (array). Let's give a short 
+pasted a numpy array as a wavenumber grid (array). Let's give a short
 example of how to calculate HT profile on a numpy array.
 
 >>> from numpy import arange
@@ -4677,10 +4677,10 @@ example of how to calculate HT profile on a numpy array.
     nuVC = 0.2
     eta = 0.5
     Dw = 1.
-    ww = arange(w0-Dw, w0+Dw, 0.01)  # GRID WITH THE STEP 0.01 
+    ww = arange(w0-Dw, w0+Dw, 0.01)  # GRID WITH THE STEP 0.01
     l1 = PROFILE_HT(w0,GammaD,Gamma0,Gamma2,Delta0,Delta2,nuVC,eta,ww)[0]
     # now l1 contains values of HT profile calculates on the grid ww
-    
+
 On additional information about parameters see getHelp(PROFILE_HT).
 
 It worth noting that PROFILE_HT returns 2 entities: real and imaginary part
@@ -4693,7 +4693,7 @@ HT, all other profiles return just one entity (the real part).
 ////////////////////////////
 
 As it was mentioned in the preface to this tutorial, the partition sums
-are taken from the TIPS-2011 (the link is given above). Partition sums 
+are taken from the TIPS-2011 (the link is given above). Partition sums
 are taken for those isotopologues, which are present in HITRAN and in
 TIPS-2011 simultaneousely.
 
@@ -4716,14 +4716,14 @@ ID       M     I         ISO                MOL
 114      47    1     (32S)(16O)3            SO3
 --------------------------------------------------
 
-The data on these isotopologues is not present in TIPS-2011 but is 
+The data on these isotopologues is not present in TIPS-2011 but is
 present in HITRAN. We're planning to add these molecules after TIPS-2013
 is released.
 
 To calculate a partition sum for most of the isotopologues in HITRAN,
 we will use a function partitionSum (use getHelp for detailed info).
-Let's just mention that 
-The syntax is as follows: partitionSum(M,I,T), where M,I - standard 
+Let's just mention that
+The syntax is as follows: partitionSum(M,I,T), where M,I - standard
 HITRAN molecule-isotopologue notation, T - definition of temperature
 range.
 
@@ -4734,7 +4734,7 @@ Usecase 2: temperature is defined by bounds and the step:
 >>> T,Q = partiionSum(1,1,[70,3000],step=1.0)
 
 In the latter example we calculate a partition sum on a range of
-temperatures from 70K to 3000K using a step 1.0 K, and having arrays 
+temperatures from 70K to 3000K using a step 1.0 K, and having arrays
 of temperature (T) and partition sum (Q) at the output.
 
 
@@ -4750,16 +4750,16 @@ thermodynamic parameters:
 3) Transmittance spectrum
 4) Radiance spectrum
 
-All these functions can be calculated with or without accounting of 
+All these functions can be calculated with or without accounting of
 an instrument properties (apparatus function, resolution, path length etc...)
 
 As it well known, the spectral functions such as absorption,
 transmittance, and radiance spectra, are calculated on the basis
 of the absorption coefficient. By that resaon, absorption coefficient
 is the most important part of simulating a cross section. This part of
-tutorial is devoted to demonstration how to calculate absorption 
-coefficient from the HITRAN line-by-line data. Here we give a brief 
-insight on basic parameters of calculation procedure, talk about some 
+tutorial is devoted to demonstration how to calculate absorption
+coefficient from the HITRAN line-by-line data. Here we give a brief
+insight on basic parameters of calculation procedure, talk about some
 useful practices and precautions.
 
 To calculate an absorption coefficient, we can use one of the following
@@ -4786,16 +4786,16 @@ absorption coefficient cross section:
 
 >>> nu,coef = absorptionCoefficient_Lorentz(SourceTables='CO2')
 
-This example calculates a Lorentz cross section using the whole set of 
+This example calculates a Lorentz cross section using the whole set of
 lines in the "co2" table. This is the simplest possible way to use these
 functions, because major part of parameters bound to their default values.
 
 If we have matplotlib installed, then we can visualize it using a plotter:
 >>> from pylab import plot
->>> plot(nu,coef) 
+>>> plot(nu,coef)
 
 API provides a flexible control over a calculation procedure. This control
-can be achieved by using a number of input parameters. So, let's dig 
+can be achieved by using a number of input parameters. So, let's dig
 into the depth of the settings.
 
 The input parameters of absorptionCoefficient_Lorentz are as follows:
@@ -4803,7 +4803,7 @@ The input parameters of absorptionCoefficient_Lorentz are as follows:
 Name                          Default value
 -------------------------------------------------------------------
 SourceTables                  '__BUFFER__'
-Components                    All isotopologues in SourceTables 
+Components                    All isotopologues in SourceTables
 partitionFunction             PYTIPS
 Environment                   {'T':296.,'p':1.}
 WavenumberRange               depends on Components
@@ -4812,7 +4812,7 @@ WavenumberWing                10 cm-1
 WavenumberWingHW              50 HWHMs
 IntensityThreshold            0 cm/molec
 GammaL                        'gamma_air'
-HITRAN_units                  True 
+HITRAN_units                  True
 File                          None
 Format                        '%e %e'
 -------------------------------------------------------------------
@@ -4822,16 +4822,16 @@ we'll make some notes about the usage of the correspondent parameter.
 
 
 SourceTables:     (required parameter)
-   
+
   List of source tables to take line-by-line data from.
   NOTE: User must provide at least one table in the list.
 
 Components:    (optional parameter)
 
   List of tuples (M,I,D) to consider in cross section calculation.
-  M here is a molecule number, I is an isotopologue number, 
+  M here is a molecule number, I is an isotopologue number,
   D is an abundance of the component.
-  NOTE: If this input contains more than one tuple, then the output 
+  NOTE: If this input contains more than one tuple, then the output
         is an absorption coefficient for mixture of corresponding gases.
   NOTE2: If omitted, then all data from the source tables is involved.
 
@@ -4846,8 +4846,8 @@ partitionFunction:    (optional parameter)
 Environment:    (optional parameter)
 
   Python dictionary containing value of pressure and temperature.
-  The format is as follows: Environment = {'p':pval,'T':tval}, 
-  where "pval" and "tval" are corresponding values in atm and K 
+  The format is as follows: Environment = {'p':pval,'T':tval},
+  where "pval" and "tval" are corresponding values in atm and K
   respectively.
   NOTE: Default value is {'p':1.0,'T':296.0}
 
@@ -4856,21 +4856,21 @@ WavenumberRange:    (optional parameter)
   List containing minimum and maximum value of wavenumber to consider
   in cross-section calculation. All lines that are out of htese bounds
   will be skipped. The firmat is as follows: WavenumberRange=[wn_low,wn_high]
-  NOTE: If this parameter os skipped, then min and max are taken 
+  NOTE: If this parameter os skipped, then min and max are taken
   from the data from SourceTables. Deprecated name is OmegaRange.
 
 WavenumberStep:    (optional parameter)
 
-  Value for the wavenumber step. 
+  Value for the wavenumber step.
   NOTE: Default value is 0.01 cm-1.
   NOTE2: Normally user would want to take the step under 0.001 when
-         calculating absorption coefficient with Doppler profile 
+         calculating absorption coefficient with Doppler profile
          because of very narrow spectral lines. Deprecated name is OmegaStep.
 
 WavenumberWing:    (optional parameter)
 
-  Absolute value of the line wing in cm-1, i.e. distance from the center 
-  of each line to the most far point where the profile is considered 
+  Absolute value of the line wing in cm-1, i.e. distance from the center
+  of each line to the most far point where the profile is considered
   to be non zero. Deprecated name is OmegaStep.
   NOTE: if omitted, then only OmegaWingHW is taken into account.
 
@@ -4888,7 +4888,7 @@ IntensityThreshold:    (optional parameter)
 GammaL:    (optional parameter)
 
   This is the name of broadening parameter to consider a "Lorentzian"
-  part in the Voigt profile. In the current 160-char format there is 
+  part in the Voigt profile. In the current 160-char format there is
   a choise between "gamma_air" and "gamma_self".
   NOTE: If the table has custom columns with a broadening coefficients,
         the user can specify the name of this column in GammaL. This
@@ -4897,7 +4897,7 @@ GammaL:    (optional parameter)
 
 HITRAN_units:    (optional parameter)
 
-  Logical flag for units, in which the absorption coefficient shoould be 
+  Logical flag for units, in which the absorption coefficient shoould be
   calculated. Currently, the choises are: cm^2/molec (if True) and
   cm-1 (if False).
   NOTE: to calculate other spectral functions like transmitance,
@@ -4911,8 +4911,8 @@ File:    (optional parameter)
 Format:    (optional parameter)
 
   C-style format for the text data to be saved. Default value is "%e %e".
-  NOTE: C-style output format specification (which are mostly valid for Python) 
-        can be found, for instance, by the link: 
+  NOTE: C-style output format specification (which are mostly valid for Python)
+        can be found, for instance, by the link:
   http://www.gnu.org/software/libc/manual/html_node/Formatted-Output.html
 
 
@@ -4931,13 +4931,13 @@ with internal API's units, we need to have an absorption coefficient cm-1:
 >>> nu,coef = absorptionCoefficient_Lorentz(SourceTables='CO2',HITRAN_units=False)
 
 To calculate absorption spectrum, use the function absorptionSpectrum():
->>> nu,absorp = absorptionSpectrum(nu,coef) 
+>>> nu,absorp = absorptionSpectrum(nu,coef)
 
 To calculate transmittance spectrum, use function transmittanceSpectrum():
->>> nu,trans = transmittanceSpectrum(nu,coef) 
+>>> nu,trans = transmittanceSpectrum(nu,coef)
 
 To calculate radiance spectrum, use function radianceSpectrum():
->>> nu,radi = radianceSpectrum(nu,coef) 
+>>> nu,radi = radianceSpectrum(nu,coef)
 
 
 The last three commands used a default path length (1 m).
@@ -4946,7 +4946,7 @@ To see complete info on all three functions, look for section
 
 Generally, all these three functions use similar set of parameters:
 
-Wavenumber:       (required parameter) 
+Wavenumber:       (required parameter)
 
   Wavenumber grid to for spectrum. Deprecated name is Omegas.
 
@@ -4954,7 +4954,7 @@ AbsorptionCoefficient        (optional parameter)
 
   Absorption coefficient as input.
 
-Environment={'T': 296.0, 'l': 100.0}       (optional parameter) 
+Environment={'T': 296.0, 'l': 100.0}       (optional parameter)
 
   Environmental parameters for calculating  spectrum.
   This parameter is a bit specific for each of functions:
@@ -4962,7 +4962,7 @@ Environment={'T': 296.0, 'l': 100.0}       (optional parameter)
   value is as follows: Environment={'l': 100.0}
   For transmittanceSpectrum() the default value, besides path length,
   contains a temperature: Environment={'T': 296.0, 'l': 100.0}
-  NOTE: temperature must be equal to that which was used in 
+  NOTE: temperature must be equal to that which was used in
   absorptionCoefficient_ routine!
 
 File         (optional parameter)
@@ -4980,7 +4980,7 @@ Format        (optional parameter)
  /// APPLYING INSTRUMENTAL FUNCTIONS ///
 ///////////////////////////////////////
 
-For comparison of the theoretical spectra with the real-world 
+For comparison of the theoretical spectra with the real-world
 instruments output it's necessary to take into account instrumental resolution.
 For this purpose HAPI has a function convolveSpectrum() which can emulate
 spectra with lower resolution using custom instrumental functions.
@@ -5002,18 +5002,18 @@ To get a description of each instrumental function we can use getHelp():
   DIFFRACTION : SLIT_DIFFRACTION
   MICHELSON   : SLIT_MICHELSON
   DISPERSION/LORENTZ : SLIT_DISPERSION
-  
+
 For instance,
 >>> getHelp(SLIT_MICHELSON)
 ... will give a datailed info about Michelson's instrumental function.
 
 
 The function convolveSpectrum() convolutes a high-resulution spectrum
-with one of supplied instrumental (slit) functions. The folowing 
+with one of supplied instrumental (slit) functions. The folowing
 parameters of this function are provided:
 
 Wavenumber     (required parameter)
-  
+
   Array of wavenumbers in high-resolution input spectrum.
   Deprecated name is Omega.
 
@@ -5041,36 +5041,36 @@ SlitFunction     (optional parameter)
   NOTE: if omitted, then the default value is SLIT_RECTANGULAR
 
 
-Before using the convolution procedure it worth giving some practical 
-advices and remarks: 
-1) Quality of a convolution depends on many things: quality of calculated 
+Before using the convolution procedure it worth giving some practical
+advices and remarks:
+1) Quality of a convolution depends on many things: quality of calculated
 spectra, width of AF_wing and WavenumberRange, Resolution, WavenumberStep etc ...
 Most of these factors are taken from previus stages of spectral calculation.
 Right choise of all these factors is crucial for the correct computation.
-2) Dispersion, Diffraction and Michelson AF's don't work well in narrow 
+2) Dispersion, Diffraction and Michelson AF's don't work well in narrow
 wavenumber range because of their broad wings.
 3) Generally one must consider WavenumberRange and AF_wing as wide as possible.
-4) After applying a convolution, the resulting spectral range for 
+4) After applying a convolution, the resulting spectral range for
 the lower-resolution spectra is reduced by the doubled value of AF_wing.
 For this reason, try to make an initial spectral range for high-resolution
 spectrum (absorption, transmittance, radiance) sufficiently broad.
 
-The following command will calculate a lower-resolution spectra from 
-the CO2 transmittance, which was calculated in a previous section. 
-The Spectral resolution is 1 cm-1, 
+The following command will calculate a lower-resolution spectra from
+the CO2 transmittance, which was calculated in a previous section.
+The Spectral resolution is 1 cm-1,
 
 >>> nu_,trans_,i1,i2,slit = convolveSpectrum(nu,trans)
 
-The outputs are: 
+The outputs are:
 
-nu_, trans_ - wavenumbers and transmittance for the resulting 
+nu_, trans_ - wavenumbers and transmittance for the resulting
               low-resolution spectrum.
 
-i1,i2 - indexes for initial nu,trans spectrum denoting the part of 
+i1,i2 - indexes for initial nu,trans spectrum denoting the part of
         wavenumber range which was taken for lower resolution spectrum.
         => Low-res spectrum is calculated on nu[i1:i2]
 
-Note, than to achieve more flexibility, one have to specify most of 
+Note, than to achieve more flexibility, one have to specify most of
 the optional parameters. For instance, more complete call is as follows:
 >>> nu_,trans_,i1,i2,slit = convolveSpectrum(nu,trans,SlitFunction=SLIT_MICHELSON,Resolution=1.0,AF_wing=20.0)
 
@@ -5090,21 +5090,21 @@ Prerequisites:
    To tun through this tutorial, user must have the following
    Python libraries installed:
    1) Matplotlib
-       Matplotlib can be obtained by the link http://matplotlib.org/ 
+       Matplotlib can be obtained by the link http://matplotlib.org/
    2) Numpy  (required by HAPI itself)
-       Numpy can be obtained via pip:  
+       Numpy can be obtained via pip:
           sudo pip install numpy (under Linux and Mac)
           pip install numpy (under Windows)
        Or by the link http://www.numpy.org/
-       
+
 As an option, user can download one of the many scientific Python
 distributions, such as Anaconda, Canopy etc...
 
 So, let's calculate plot the basic entities which ar provided by HAPI.
-To do so, we will do all necessary steps to download, filter and 
+To do so, we will do all necessary steps to download, filter and
 calculate cross sections "from scratch". To demonstrate the different
-possibilities of matplotlib, we will mostly use Pylab - a part of 
-Matplotlib with the interface similar to Matlab. Please note, that it's 
+possibilities of matplotlib, we will mostly use Pylab - a part of
+Matplotlib with the interface similar to Matlab. Please note, that it's
 not the only way to use Matplotlib. More information can be found on it's site.
 
 The next part is a step-by-step guide, demonstrating basic possilities
@@ -5115,7 +5115,7 @@ First, do some preliminary imports:
 >>> from pylab import show,plot,subplot,xlim,ylim,title,legend,xlabel,ylabel,hold
 
 Start the database 'data':
->>> db_begin('data') 
+>>> db_begin('data')
 
 Download lines for main isotopologue of ozone in [3900,4050] range:
 >>> fetch('O3',3,1,3900,4050)
@@ -5141,8 +5141,8 @@ Calculate and plot difference between Voigt and Lorentzian lineshape:
 >>> title('Voigt-Lorentz residual')   # show title
 >>> show()   # show all figures
 
-Calculate and plot absorption coefficients for ozone using Voigt 
-profile. Spectra are calculated for 4 cases of thermodynamic parameters: 
+Calculate and plot absorption coefficients for ozone using Voigt
+profile. Spectra are calculated for 4 cases of thermodynamic parameters:
 (1 atm, 296 K), (5 atm, 296 K), (1 atm, 500 K), and (5 atm, 500 K)
 >>> nu1,coef1 = absorptionCoefficient_Voigt(((3,1),),'O3',
         WavenumberStep=0.01,HITRAN_units=False,GammaL='gamma_self',
@@ -5162,7 +5162,7 @@ profile. Spectra are calculated for 4 cases of thermodynamic parameters:
 >>> subplot(2,2,4); plot(nu4,coef4); title('O3 k(w): p=5 atm, T=500K')
 >>> show()
 
-Calculate and plot absorption, transmittance and radiance spectra for 1 atm 
+Calculate and plot absorption, transmittance and radiance spectra for 1 atm
 and 296K. Path length is set to 10 m.
 >>> nu,absorp = absorptionSpectrum(nu1,coef1,Environment={'l':1000.})
 >>> nu,transm = transmittanceSpectrum(nu1,coef1,Environment={'l':1000.})
@@ -5277,7 +5277,7 @@ def getHelp(arg=None):
     else:
        help(arg)
 
-    
+
 
 # Get atmospheric (natural) abundance
 # for a specified isotopologue
@@ -5285,10 +5285,10 @@ def getHelp(arg=None):
 # I - isotopologue number
 def abundance(M,I):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         M: HITRAN molecule number
         I: HITRAN isotopologue number
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         Abbundance: natural abundance
     ---
     DESCRIPTION:
@@ -5306,10 +5306,10 @@ def abundance(M,I):
 # I - isotopologue number
 def molecularMass(M,I):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         M: HITRAN molecule number
         I: HITRAN isotopologue number
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         MolMass: molecular mass
     ---
     DESCRIPTION:
@@ -5327,9 +5327,9 @@ def molecularMass(M,I):
 # I - isotopologue number
 def moleculeName(M):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         M: HITRAN molecule number
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         MolName: molecular name
     ---
     DESCRIPTION:
@@ -5347,10 +5347,10 @@ def moleculeName(M):
 # I - isotopologue number
 def isotopologueName(M,I):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         M: HITRAN molecule number
         I: HITRAN isotopologue number
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         IsoMass: isotopologue mass
     ---
     DESCRIPTION:
@@ -5365,9 +5365,9 @@ def isotopologueName(M,I):
 # ----------------------- table list ----------------------------------
 def tableList():
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         none
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         TableList: a list of available tables
     ---
     DESCRIPTION:
@@ -5383,13 +5383,13 @@ def tableList():
 # ----------------------- describe ----------------------------------
 def describe(TableName):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         TableName: name of the table to describe
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         none
     ---
     DESCRIPTION:
-        Print information about table, including 
+        Print information about table, including
         parameter names, formats and wavenumber range.
     ---
     EXAMPLE OF USAGE:
@@ -5402,13 +5402,13 @@ def describe(TableName):
 
 def db_begin(db=None):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         db: database name (optional)
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         none
     ---
     DESCRIPTION:
-        Open a database connection. A database is stored 
+        Open a database connection. A database is stored
         in a folder given in db input parameter.
         Default=data
     ---
@@ -5420,9 +5420,9 @@ def db_begin(db=None):
 
 def db_commit():
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         none
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         none
     ---
     DESCRIPTION:
@@ -5442,12 +5442,12 @@ def comment(TableName,Comment):
 
 def fetch_by_ids(TableName,iso_id_list,numin,numax,ParameterGroups=[],Parameters=[]):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         TableName:   local table name to fetch in (required)
         iso_id_list: list of isotopologue id's    (required)
         numin:       lower wavenumber bound       (required)
         numax:       upper wavenumber bound       (required)
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         none
     ---
     DESCRIPTION:
@@ -5473,21 +5473,21 @@ def fetch_by_ids(TableName,iso_id_list,numin,numax,ParameterGroups=[],Parameters
 #def queryHITRAN(TableName,iso_id_list,numin,numax):
 def fetch(TableName,M,I,numin,numax,ParameterGroups=[],Parameters=[]):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         TableName:   local table name to fetch in (required)
         M:           HITRAN molecule number       (required)
         I:           HITRAN isotopologue number   (required)
         numin:       lower wavenumber bound       (required)
         numax:       upper wavenumber bound       (required)
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         none
     ---
     DESCRIPTION:
         Download line-by-line data from HITRANonline server
         and save it to local table. The input parameters M and I
         are the HITRAN molecule and isotopologue numbers.
-        This function results in a table containing single 
-        isotopologue specie. To have multiple species in a 
+        This function results in a table containing single
+        isotopologue specie. To have multiple species in a
         single table use fetch_by_ids instead.
     ---
     EXAMPLE OF USAGE:
@@ -5509,11 +5509,11 @@ def fetch(TableName,M,I,numin,numax,ParameterGroups=[],Parameters=[]):
 def AtoB(aa,A,B,npt):
 #***************************
 #...LaGrange 3- and 4-point interpolation
-#...arrays A and B are the npt data points,  given aa, a value of the 
+#...arrays A and B are the npt data points,  given aa, a value of the
 #...A variable, the routine will find the corresponding bb value
 #
 #...input:  aa
-#...output: bb 
+#...output: bb
     for I in range(2,npt+1):
         if A[I-1] >= aa:
             if I < 3 or I == npt:
@@ -5614,9 +5614,9 @@ TIPS_NPT = len(Tdat)
 
 
 # REMARK
-# float32 gives exactly the same results as fortran TIPS, because 
-# all constants in the fortran code given as xx.xxE+-XX, i.e. 
-# in single precision. By this fact all unsignificant figures 
+# float32 gives exactly the same results as fortran TIPS, because
+# all constants in the fortran code given as xx.xxE+-XX, i.e.
+# in single precision. By this fact all unsignificant figures
 # over single precision are filled with digital garbage
 
 
@@ -5836,7 +5836,7 @@ TIPS_ISO_HASH[(M,I)] = float32([0.53642E+02, 0.75947E+02, 0.98292E+02,
       0.95975E+05, 0.99294E+05, 0.10271E+06, 0.10621E+06, 0.10981E+06,
       0.11351E+06])
 
-      
+
 #  --------------- CO2 636: M = 2, I = 2 ---------------------
 M = 2
 I = 2
@@ -5866,8 +5866,8 @@ TIPS_ISO_HASH[(M,I)] = float32([0.10728E+03, 0.15189E+03, 0.19659E+03,
       0.17338E+06, 0.17962E+06, 0.18604E+06, 0.19264E+06, 0.19943E+06,
       0.20642E+06, 0.21360E+06, 0.22098E+06, 0.22856E+06, 0.23636E+06,
       0.24436E+06])
-    
-    
+
+
 #  --------------- CO2 628: M = 2, I = 3 ---------------------
 M = 2
 I = 3
@@ -5897,8 +5897,8 @@ TIPS_ISO_HASH[(M,I)] = float32([0.11368E+03, 0.16096E+03, 0.20833E+03,
       0.17580E+06, 0.18211E+06, 0.18859E+06, 0.19526E+06, 0.20213E+06,
       0.20918E+06, 0.21643E+06, 0.22388E+06, 0.23154E+06, 0.23941E+06,
       0.24750E+06])
-    
-    
+
+
 #  --------------- CO2 627: M = 2, I = 4 ---------------------
 M = 2
 I = 4
@@ -5928,7 +5928,7 @@ TIPS_ISO_HASH[(M,I)] = float32([0.66338E+03, 0.93923E+03, 0.12156E+04,
       0.10129E+07, 0.10492E+07, 0.10865E+07, 0.11249E+07, 0.11644E+07,
       0.12050E+07, 0.12467E+07, 0.12896E+07, 0.13337E+07, 0.13789E+07,
       0.14255E+07])
-    
+
 
 #  --------------- CO2 638: M = 2, I = 5 ---------------------
 M = 2
@@ -6118,7 +6118,7 @@ TIPS_ISO_HASH[(M,I)] = float32([0.12066E+03, 0.17085E+03, 0.22116E+03,
 #  --------------- CO2 838: M = 2, I = 0 ALIAS-----------------
 TIPS_GSI_HASH[(M,0)] = __FloatType__(2.)
 TIPS_ISO_HASH[(M,0)] = TIPS_ISO_HASH[(M,I)]
-      
+
 #  --------------- CO2 837: M = 2, I = 11 ---------------------
 M = 2
 I = 11
@@ -6149,7 +6149,7 @@ TIPS_ISO_HASH[(M,I)] = float32([0.14071E+04, 0.19923E+04, 0.25789E+04,
       0.28312E+07, 0.29301E+07, 0.30317E+07, 0.31361E+07, 0.32434E+07,
       0.33537E+07])
 
-    
+
 #  --------------- O3 666: M = 3, I = 1 ---------------------
 M = 3
 I = 1
@@ -9541,7 +9541,7 @@ TIPS_ISO_HASH[(M,I)] = float32([0.27029E+04, 0.39999E+04, 0.55894E+04,
       0.71183E+11])
 
 
-#  --------------- H2 11: M = 45, I = 1 --------------------- 
+#  --------------- H2 11: M = 45, I = 1 ---------------------
 M = 45
 I = 1
 TIPS_GSI_HASH[(M,I)] = __FloatType__(1.)
@@ -9572,7 +9572,7 @@ TIPS_ISO_HASH[(M,I)] = float32([0.15265E+01, 0.22243E+01, 0.29619E+01,
       0.86048E+02])
 
 
-#  --------------- H2 12: M = 45, I = 2 --------------------- 
+#  --------------- H2 12: M = 45, I = 2 ---------------------
 M = 45
 I = 2
 TIPS_GSI_HASH[(M,I)] = __FloatType__(6.)
@@ -9603,7 +9603,7 @@ TIPS_ISO_HASH[(M,I)] = float32([0.81692E+01, 0.10308E+02, 0.12557E+02,
       0.36875E+03])
 
 
-#  --------------- CS 22: M = 46, I = 1 --------------------- 
+#  --------------- CS 22: M = 46, I = 1 ---------------------
 M = 46
 I = 1
 TIPS_GSI_HASH[(M,I)] = __FloatType__(1.)
@@ -9634,7 +9634,7 @@ TIPS_ISO_HASH[(M,I)] = float32([0.51416E+02, 0.72723E+02, 0.94044E+02,
       0.58380E+04])
 
 
-#  --------------- CS 24: M = 46, I = 2 --------------------- 
+#  --------------- CS 24: M = 46, I = 2 ---------------------
 M = 46
 I = 2
 TIPS_GSI_HASH[(M,I)] = __FloatType__(1.)
@@ -9665,7 +9665,7 @@ TIPS_ISO_HASH[(M,I)] = float32([0.52247E+02, 0.73900E+02, 0.95568E+02,
       0.59676E+04])
 
 
-#  --------------- CS 32: M = 46, I = 3 --------------------- 
+#  --------------- CS 32: M = 46, I = 3 ---------------------
 M = 46
 I = 3
 TIPS_GSI_HASH[(M,I)] = __FloatType__(2.)
@@ -9696,7 +9696,7 @@ TIPS_ISO_HASH[(M,I)] = float32([0.10889E+03, 0.15403E+03, 0.19920E+03,
       0.12630E+05])
 
 
-#  --------------- CS 23: M = 46, I = 4 --------------------- 
+#  --------------- CS 23: M = 46, I = 4 ---------------------
 M = 46
 I = 4
 TIPS_GSI_HASH[(M,I)] = __FloatType__(4.)
@@ -9739,11 +9739,11 @@ TIPS_ISO_HASH[(M,I)] = float32([0.])
 #
 # id       M    I     COMMENT          TIPS_M    TIPS_I        iso_name                 abundance          mass       mol_name
 #101    1001    1    not in HITRAN      45                     H                        \N                 \N              H
-#                
+#
 #102    1002    1    not in HITRAN      45                     He                       \N                 \N              He
-#                
+#
 #104    1018    1    not in HITRAN      45                     Ar                       \N                 \N              Ar
-#                
+#
 #                    not in HITRAN      45         4224                                                                    C2N2
 #                    not in HITRAN      45         5225                                                                    C2N2
 #
@@ -9765,7 +9765,7 @@ def BD_TIPS_2011_PYTHON(M,I,T):
     # out of temperature range
     if T<70. or T>3000.:
         raise Exception('TIPS: T must be between 70K and 3000K.')
-    
+
     try:
         # get statistical weight for specified isotopologue
         gi = TIPS_GSI_HASH[(M,I)]
@@ -9773,7 +9773,7 @@ def BD_TIPS_2011_PYTHON(M,I,T):
         Qt = AtoB(T,Tdat,TIPS_ISO_HASH[(M,I)],TIPS_NPT)
     except KeyError:
         raise Exception('TIPS: no data for M,I = %d,%d.' % (M,I))
-    
+
     return gi,Qt
 
 #  --------------- /TIPS-2011 IMPLEMENTATION ----------------------
@@ -17736,11 +17736,11 @@ def BD_TIPS_2017_PYTHON(M,I,T):
     # get temperature grid
     TT = TIPS_2017_ISOT_HASH[(M,I)]
     Tmin = min(TT); Tmax = max(TT)
-    
+
     # out of temperature range
     if T<Tmin or T>Tmax:
         raise Exception('TIPS2017: T(%.1fK) must be between %.1fK and %.1fK.'%(T,Tmin,Tmax))
-    
+
     try:
         # get statistical weight for specified isotopologue
         #gi = TIPS_GSI_HASH[(M,I)] # Take from TIPS-2011?
@@ -17748,7 +17748,7 @@ def BD_TIPS_2017_PYTHON(M,I,T):
         Qt = AtoB(T,TT,TIPS_2017_ISOQ_HASH[(M,I)],len(TT))
     except KeyError:
         raise Exception('TIPS2017: no data for M,I = %d,%d.' % (M,I))
-    
+
     return None,Qt
 
 def BD_TIPS_2017_PYTHON_SLICE(M,I,T,n=20): # testing
@@ -17760,19 +17760,19 @@ def BD_TIPS_2017_PYTHON_SLICE(M,I,T,n=20): # testing
     # get temperature grid
     TT = TIPS_2017_ISOT_HASH[(M,I)]
     Tmin = min(TT); Tmax = max(TT); NT = len(TT)
-    
+
     # get partition sum
     QQ = TIPS_2017_ISOQ_HASH[(M,I)]
-    
+
     # slice temperature grid and partition sum
     i_T = np.searchsorted(TT,T)
     TT_ = TT[max(i_T-n,0):min(i_T+n,NT)]
     QQ_ = QQ[max(i_T-n,0):min(i_T+n,NT)]
-    
+
     # out of temperature range
     if T<Tmin or T>Tmax:
         raise Exception('TIPS2017: T(%.1fK) must be between %.1fK and %.1fK.'%(T,Tmin,Tmax))
-    
+
     try:
         # get statistical weight for specified isotopologue
         #gi = TIPS_GSI_HASH[(M,I)] # Take from TIPS-2011?
@@ -17780,9 +17780,9 @@ def BD_TIPS_2017_PYTHON_SLICE(M,I,T,n=20): # testing
         Qt = AtoB(T,TT_,QQ_,len(TT_))
     except KeyError:
         raise Exception('TIPS2017: no data for M,I = %d,%d.' % (M,I))
-    
-    return None,Qt    
-    
+
+    return None,Qt
+
 # ALIASES FOR TIPS
 PYTIPS2011 = lambda M,I,T: BD_TIPS_2011_PYTHON(M,I,T)[1]
 PYTIPS2017 = lambda M,I,T: BD_TIPS_2017_PYTHON(M,I,T)[1]
@@ -17796,7 +17796,7 @@ PYTIPS = PYTIPS2017 # stub for backwards compatibility
 # returns (StatWeight,PartitionSum)
 def partitionSum(M,I,T,step=None,version=2017):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         M: HITRAN molecule number              (required)
         I: HITRAN isotopologue number          (required)
         T: temperature conditions              (required)
@@ -17810,18 +17810,18 @@ def partitionSum(M,I,T,step=None,version=2017):
         This function uses a python implementation of TIPS-2011 code:
 
         References:
-        
+
             TIPS-2011:
-            Laraia AL, Gamache RR, Lamouroux J, Gordon IE, Rothman LS. 
-            Total internal partition sums to support planetary remote sensing. 
+            Laraia AL, Gamache RR, Lamouroux J, Gordon IE, Rothman LS.
+            Total internal partition sums to support planetary remote sensing.
             Icarus 2011;215:391–400.
             http://dx.doi.org/10.1016/j.icarus.2011.06.004
 
             TIPS-2017:
-            Gamache RR, Roller C, Lopes E, Gordon IE, Rothman LS, Polyansky OL, et al. 
-            Total internal partition sums for 166 isotopologues of 51 molecules 
-            important in planetary atmospheres: Application to HITRAN2016 and beyond. 
-            J Quant Spectrosc Radiat Transf 2017;203:70–87. 
+            Gamache RR, Roller C, Lopes E, Gordon IE, Rothman LS, Polyansky OL, et al.
+            Total internal partition sums for 166 isotopologues of 51 molecules
+            important in planetary atmospheres: Application to HITRAN2016 and beyond.
+            J Quant Spectrosc Radiat Transf 2017;203:70–87.
             http://dx.doi.org/10.1016/j.jqsrt.2017.03.045
 
         Output depends on a structure of input parameter T so that:
@@ -17869,13 +17869,13 @@ pipwoeronehalf = __FloatType__(0.564189583547756e0)
 def cpf3(X,Y):
 
     # X,Y,WR,WI - numpy arrays
-    if type(X) != ndarray: 
-        if type(X) not in set([list,tuple]): 
+    if type(X) != ndarray:
+        if type(X) not in set([list,tuple]):
             X = array([X])
         else:
             X = array(X)
-    if type(Y) != ndarray: 
-        if type(Y) not in set([list,tuple]): 
+    if type(Y) != ndarray:
+        if type(Y) not in set([list,tuple]):
             Y = array([Y])
         else:
             Y = array(Y)
@@ -17888,9 +17888,9 @@ def cpf3(X,Y):
     for tt_i in tt:
         zterm *= zm2*tt_i
         zsum += zterm
-    
+
     zsum *= zi*zm1*pipwoeronehalf
-    
+
     return zsum.real, zsum.imag
 
 T = __FloatType__([0.314240376e0,0.947788391e0,1.59768264e0,2.27950708e0,3.02063703e0,3.8897249e0])
@@ -17901,17 +17901,17 @@ S = __FloatType__([1.393237e0,0.231152406e0,-0.155351466e0,6.21836624e-3,9.19082
 def cpf(X,Y):
 
     # X,Y,WR,WI - numpy arrays
-    if type(X) != ndarray: 
-        if type(X) not in set([list,tuple]): 
+    if type(X) != ndarray:
+        if type(X) not in set([list,tuple]):
             X = array([X])
         else:
             X = array(X)
-    if type(Y) != ndarray: 
-        if type(Y) not in set([list,tuple]): 
+    if type(Y) != ndarray:
+        if type(Y) not in set([list,tuple]):
             Y = array([Y])
         else:
             Y = array(Y)
-    
+
     # REGION3
     index_REGION3 = where(sqrt(X**2 + Y**2) > __FloatType__(8.0e0))
     X_REGION3 = X[index_REGION3]
@@ -17924,30 +17924,30 @@ def cpf(X,Y):
         zterm *= zm2*tt_i
         zsum_REGION3 += zterm
     zsum_REGION3 *= zi*zm1*pipwoeronehalf
-    
+
     index_REGION12 = setdiff1d(array(arange(len(X))),array(index_REGION3))
     X_REGION12 = X[index_REGION12]
     Y_REGION12 = Y[index_REGION12]
-    
+
     WR = __FloatType__(0.0e0)
     WI = __FloatType__(0.0e0)
-    
+
     # REGION12
     Y1_REGION12 = Y_REGION12 + __FloatType__(1.5e0)
     Y2_REGION12 = Y1_REGION12**2
 
-    # REGION2    
-    subindex_REGION2 = where((Y_REGION12 <= 0.85e0) & 
+    # REGION2
+    subindex_REGION2 = where((Y_REGION12 <= 0.85e0) &
                              (abs(X_REGION12) >= (18.1e0*Y_REGION12 + 1.65e0)))
-    
+
     index_REGION2 = index_REGION12[subindex_REGION2]
-    
+
     X_REGION2 = X[index_REGION2]
     Y_REGION2 = Y[index_REGION2]
     Y1_REGION2 = Y1_REGION12[subindex_REGION2]
     Y2_REGION2 = Y2_REGION12[subindex_REGION2]
     Y3_REGION2 = Y_REGION2 + __FloatType__(3.0e0)
-    
+
     WR_REGION2 = WR
     WI_REGION2 = WI
 
@@ -17955,21 +17955,21 @@ def cpf(X,Y):
     ii = abs(X_REGION2) < __FloatType__(12.0e0)
     WR_REGION2[ii] = exp(-X_REGION2[ii]**2)
     WR_REGION2[~ii] = WR
-    
+
     for I in range(6):
         R_REGION2 = X_REGION2 - T[I]
         R2_REGION2 = R_REGION2**2
         D_REGION2 = __FloatType__(1.0e0) / (R2_REGION2 + Y2_REGION2)
         D1_REGION2 = Y1_REGION2 * D_REGION2
         D2_REGION2 = R_REGION2 * D_REGION2
-        WR_REGION2 = WR_REGION2 + Y_REGION2 * (U[I]*(R_REGION2*D2_REGION2 - 1.5e0*D1_REGION2) + 
+        WR_REGION2 = WR_REGION2 + Y_REGION2 * (U[I]*(R_REGION2*D2_REGION2 - 1.5e0*D1_REGION2) +
                                                S[I]*Y3_REGION2*D2_REGION2)/(R2_REGION2 + 2.25e0)
         R_REGION2 = X_REGION2 + T[I]
-        R2_REGION2 = R_REGION2**2                
+        R2_REGION2 = R_REGION2**2
         D_REGION2 = __FloatType__(1.0e0) / (R2_REGION2 + Y2_REGION2)
         D3_REGION2 = Y1_REGION2 * D_REGION2
         D4_REGION2 = R_REGION2 * D_REGION2
-        WR_REGION2 = WR_REGION2 + Y_REGION2 * (U[I]*(R_REGION2*D4_REGION2 - 1.5e0*D3_REGION2) - 
+        WR_REGION2 = WR_REGION2 + Y_REGION2 * (U[I]*(R_REGION2*D4_REGION2 - 1.5e0*D3_REGION2) -
                                                S[I]*Y3_REGION2*D4_REGION2)/(R2_REGION2 + 2.25e0)
         WI_REGION2 = WI_REGION2 + U[I]*(D2_REGION2 + D4_REGION2) + S[I]*(D1_REGION2 - D3_REGION2)
 
@@ -17977,14 +17977,14 @@ def cpf(X,Y):
     index_REGION1 = setdiff1d(array(index_REGION12),array(index_REGION2))
     X_REGION1 = X[index_REGION1]
     Y_REGION1 = X[index_REGION1]
-    
+
     subindex_REGION1 = setdiff1d(array(arange(len(index_REGION12))),array(subindex_REGION2))
     Y1_REGION1 = Y1_REGION12[subindex_REGION1]
     Y2_REGION1 = Y2_REGION12[subindex_REGION1]
-    
+
     WR_REGION1 = WR
-    WI_REGION1 = WI  
-    
+    WI_REGION1 = WI
+
     for I in range(6):
         R_REGION1 = X_REGION1 - T[I]
         D_REGION1 = __FloatType__(1.0e0) / (R_REGION1**2 + Y2_REGION1)
@@ -17994,7 +17994,7 @@ def cpf(X,Y):
         D_REGION1 = __FloatType__(1.0e0) / (R_REGION1**2 + Y2_REGION1)
         D3_REGION1 = Y1_REGION1 * D_REGION1
         D4_REGION1 = R_REGION1 * D_REGION1
-        
+
         WR_REGION1 = WR_REGION1 + U[I]*(D1_REGION1 + D3_REGION1) - S[I]*(D2_REGION1 - D4_REGION1)
         WI_REGION1 = WI_REGION1 + U[I]*(D2_REGION1 + D4_REGION1) + S[I]*(D1_REGION1 - D3_REGION1)
 
@@ -18010,21 +18010,21 @@ def cpf(X,Y):
     # REGION1
     WR_TOTAL[index_REGION1] = WR_REGION1
     WI_TOTAL[index_REGION1] = WI_REGION1
-    
+
     return WR_TOTAL,WI_TOTAL
 
 
 hcpf = cpf # stub for initial cpf
-    
+
 # ------------------ Schreier CPF ------------------------
 
-# "Optimized implementations of rational approximations 
+# "Optimized implementations of rational approximations
 #  for the Voigt and complex error function".
 # Franz Schreier. JQSRT 112 (2011) 1010-10250
 # doi:10.1016/j.jqsrt.2010.12.010
 
 # Enable this if numpy.polyval doesn't perform well.
-"""    
+"""
 def polyval(p, x):
     y = zeros(x.shape, dtype=float)
     for i, v in enumerate(p):
@@ -18032,7 +18032,7 @@ def polyval(p, x):
         y += v
     return y
 """;
-    
+
 def cef(x,y,N):
     # Computes the function w(z) = exp(-zA2) erfc(-iz) using a rational
     # series with N terms. It is assumed that Im(z) > 0 or Im(z) = 0.
@@ -18050,7 +18050,7 @@ def cef(x,y,N):
     w = 2*p/(L-1.0j*z)**2+(1/sqrt(pi))/(L-1.0j*z); # Evaluate w(z).
     return w
 
-# weideman24 by default    
+# weideman24 by default
 #weideman24 = lambda x,y: cef(x,y,24)
 weideman = lambda x,y,n: cef(x,y,n)
 
@@ -18069,12 +18069,12 @@ def hum1_wei(x,y,n=24):
 
 VARIABLES['CPF'] = hum1_wei
 #VARIABLES['CPF'] = cpf
-    
+
 # ------------------ Hartmann-Tran Profile (HTP) ------------------------
 def pcqsdhc(sg0,GamD,Gam0,Gam2,Shift0,Shift2,anuVC,eta,sg):
     #-------------------------------------------------
     #      "pCqSDHC": partially-Correlated quadratic-Speed-Dependent Hard-Collision
-    #      Subroutine to Compute the complex normalized spectral shape of an 
+    #      Subroutine to Compute the complex normalized spectral shape of an
     #      isolated line by the pCqSDHC model
     #
     #      Reference:
@@ -18089,12 +18089,12 @@ def pcqsdhc(sg0,GamD,Gam0,Gam2,Shift0,Shift2,anuVC,eta,sg):
     #      amM1       : Molar mass of the absorber in g/mol(Input).
     #      sg0        : Unperturbed line position in cm-1 (Input).
     #      GamD       : Doppler HWHM in cm-1 (Input)
-    #      Gam0       : Speed-averaged line-width in cm-1 (Input).       
+    #      Gam0       : Speed-averaged line-width in cm-1 (Input).
     #      Gam2       : Speed dependence of the line-width in cm-1 (Input).
     #      anuVC      : Velocity-changing frequency in cm-1 (Input).
     #      eta        : Correlation parameter, No unit (Input).
     #      Shift0     : Speed-averaged line-shift in cm-1 (Input).
-    #      Shift2     : Speed dependence of the line-shift in cm-1 (Input)       
+    #      Shift2     : Speed dependence of the line-shift in cm-1 (Input)
     #      sg         : Current WaveNumber of the Computation in cm-1 (Input).
     #
     #      Output Quantities (through Common Statements)
@@ -18111,12 +18111,12 @@ def pcqsdhc(sg0,GamD,Gam0,Gam2,Shift0,Shift2,anuVC,eta,sg):
     #     Double Precision Version
     #
     #-------------------------------------------------
-    
+
     # sg is the only vector argument which is passed to fusnction
-    
+
     if type(sg) not in set([array,ndarray,list,tuple]):
         sg = array([sg])
-    
+
     number_of_points = len(sg)
     Aterm_GLOBAL = zeros(number_of_points,dtype=__ComplexType__)
     Bterm_GLOBAL = zeros(number_of_points,dtype=__ComplexType__)
@@ -18154,7 +18154,7 @@ def pcqsdhc(sg0,GamD,Gam0,Gam2,Shift0,Shift2,anuVC,eta,sg):
         index_PART2 = abs(X) <= 3.0e-8 * abs(Y)
         index_PART3 = (abs(Y) <= 1.0e-15 * abs(X)) & ~index_PART2
         index_PART4 = ~ (index_PART2 | index_PART3)
-        
+
         # PART4
         if any(index_PART4):
             X_TMP = X[index_PART4]
@@ -18190,7 +18190,7 @@ def pcqsdhc(sg0,GamD,Gam0,Gam2,Shift0,Shift2,anuVC,eta,sg):
                 WI1_PART4[index_CPF] = WI1
                 WR2_PART4[index_CPF] = WR2
                 WI2_PART4[index_CPF] = WI2
-            
+
             Aterm = rpi*cte*(__ComplexType__(WR1_PART4 + 1.0e0j*WI1_PART4) - __ComplexType__(WR2_PART4+1.0e0j*WI2_PART4))
             Bterm = (-1.0e0 +
                       rpi/(2.0e0*csqrtY)*(1.0e0 - Z1**2)*__ComplexType__(WR1_PART4 + 1.0e0j*WI1_PART4)-
@@ -18208,20 +18208,20 @@ def pcqsdhc(sg0,GamD,Gam0,Gam2,Shift0,Shift2,anuVC,eta,sg):
             xZ2 = -Z2.imag
             yZ2 = Z2.real
             WR1_PART2,WI1_PART2 = VARIABLES['CPF'](xZ1,yZ1)
-            WR2_PART2,WI2_PART2 = VARIABLES['CPF'](xZ2,yZ2) 
+            WR2_PART2,WI2_PART2 = VARIABLES['CPF'](xZ2,yZ2)
             Aterm = rpi*cte*(__ComplexType__(WR1_PART2 + 1.0e0j*WI1_PART2) - __ComplexType__(WR2_PART2 + 1.0e0j*WI2_PART2))
             Bterm = (-1.0e0 +
                       rpi/(2.0e0*csqrtY)*(1.0e0 - Z1**2)*__ComplexType__(WR1_PART2 + 1.0e0j*WI1_PART2)-
                       rpi/(2.0e0*csqrtY)*(1.0e0 - Z2**2)*__ComplexType__(WR2_PART2 + 1.0e0j*WI2_PART2)) / c2t
             Aterm_GLOBAL[index_PART2] = Aterm
             Bterm_GLOBAL[index_PART2] = Bterm
-            
+
         # PART3
         if any(index_PART3):
             X_TMP = X[index_PART3]
             xZ1 = -sqrt(X_TMP + Y).imag
             yZ1 = sqrt(X_TMP + Y).real
-            WR1_PART3,WI1_PART3 =  VARIABLES['CPF'](xZ1,yZ1) 
+            WR1_PART3,WI1_PART3 =  VARIABLES['CPF'](xZ1,yZ1)
             index_ABS = abs(sqrt(X_TMP)) <= 4.0e3
             index_NOT_ABS = ~index_ABS
             Aterm = zeros(len(index_PART3),dtype=__ComplexType__)
@@ -18241,7 +18241,7 @@ def pcqsdhc(sg0,GamD,Gam0,Gam2,Shift0,Shift2,anuVC,eta,sg):
                                          2.0e0*rpi*sqrt(X_TMP[index_NOT_ABS] + Y)*__ComplexType__(WR1 + 1.0e0j*WI1))
             Aterm_GLOBAL[index_PART3] = Aterm
             Bterm_GLOBAL[index_PART3] = Bterm
-            
+
     # common part
     LS_pCqSDHC = (1.0e0/pi) * (Aterm_GLOBAL / (1.0e0 - (anuVC-eta*(c0-1.5e0*c2))*Aterm_GLOBAL + eta*c2*Bterm_GLOBAL))
     return LS_pCqSDHC.real,LS_pCqSDHC.imag
@@ -18256,13 +18256,13 @@ def PROFILE_HT(sg0,GamD,Gam0,Gam2,Shift0,Shift2,anuVC,eta,sg):
     """
     #-------------------------------------------------
     #      "pCqSDHC": partially-Correlated quadratic-Speed-Dependent Hard-Collision
-    #      Subroutine to Compute the complex normalized spectral shape of an 
+    #      Subroutine to Compute the complex normalized spectral shape of an
     #      isolated line by the pCqSDHC model
     #
     #      References:
     #
     #      1) N.H. Ngo, D. Lisak, H. Tran, J.-M. Hartmann.
-    #         An isolated line-shape model to go beyond the Voigt profile in 
+    #         An isolated line-shape model to go beyond the Voigt profile in
     #         spectroscopic databases and radiative transfer codes.
     #         JQSRT, Volume 129, November 2013, Pages 89–100
     #         http://dx.doi.org/10.1016/j.jqsrt.2013.05.034
@@ -18283,12 +18283,12 @@ def PROFILE_HT(sg0,GamD,Gam0,Gam2,Shift0,Shift2,anuVC,eta,sg):
     #      amM1    : Molar mass of the absorber in g/mol(Input).
     #      sg0     : Unperturbed line position in cm-1 (Input).
     #      GamD    : Doppler HWHM in cm-1 (Input)
-    #      Gam0    : Speed-averaged line-width in cm-1 (Input).       
+    #      Gam0    : Speed-averaged line-width in cm-1 (Input).
     #      Gam2    : Speed dependence of the line-width in cm-1 (Input).
     #      anuVC   : Velocity-changing frequency in cm-1 (Input).
     #      eta     : Correlation parameter, No unit (Input).
     #      Shift0  : Speed-averaged line-shift in cm-1 (Input).
-    #      Shift2  : Speed dependence of the line-shift in cm-1 (Input)       
+    #      Shift2  : Speed dependence of the line-shift in cm-1 (Input)
     #      sg      : Current WaveNumber of the Computation in cm-1 (Input).
     #
     #      The function has two outputs:
@@ -18313,11 +18313,11 @@ def PROFILE_SDRAUTIAN(sg0,GamD,Gam0,Gam2,Shift0,Shift2,anuVC,sg):
     # Input parameters:
     #      sg0     : Unperturbed line position in cm-1 (Input).
     #      GamD    : Doppler HWHM in cm-1 (Input)
-    #      Gam0    : Speed-averaged line-width in cm-1 (Input).       
+    #      Gam0    : Speed-averaged line-width in cm-1 (Input).
     #      Gam2    : Speed dependence of the line-width in cm-1 (Input).
     #      anuVC   : Velocity-changing frequency in cm-1 (Input).
     #      Shift0  : Speed-averaged line-shift in cm-1 (Input).
-    #      Shift2  : Speed dependence of the line-shift in cm-1 (Input)       
+    #      Shift2  : Speed dependence of the line-shift in cm-1 (Input)
     #      sg      : Current WaveNumber of the Computation in cm-1 (Input).
     """
     return pcqsdhc(sg0,GamD,Gam0,Gam2,Shift0,Shift2,anuVC,cZero,sg)
@@ -18328,7 +18328,7 @@ def PROFILE_RAUTIAN(sg0,GamD,Gam0,Shift0,anuVC,eta,sg):
     # Input parameters:
     #      sg0     : Unperturbed line position in cm-1 (Input).
     #      GamD    : Doppler HWHM in cm-1 (Input)
-    #      Gam0    : Speed-averaged line-width in cm-1 (Input).       
+    #      Gam0    : Speed-averaged line-width in cm-1 (Input).
     #      anuVC   : Velocity-changing frequency in cm-1 (Input).
     #      Shift0  : Speed-averaged line-shift in cm-1 (Input).
     #      sg      : Current WaveNumber of the Computation in cm-1 (Input).
@@ -18341,21 +18341,21 @@ def PROFILE_SDVOIGT(sg0,GamD,Gam0,Gam2,Shift0,Shift2,sg):
     # Input parameters:
     #      sg0     : Unperturbed line position in cm-1 (Input).
     #      GamD    : Doppler HWHM in cm-1 (Input)
-    #      Gam0    : Speed-averaged line-width in cm-1 (Input).       
+    #      Gam0    : Speed-averaged line-width in cm-1 (Input).
     #      Gam2    : Speed dependence of the line-width in cm-1 (Input).
     #      Shift0  : Speed-averaged line-shift in cm-1 (Input).
-    #      Shift2  : Speed dependence of the line-shift in cm-1 (Input)       
+    #      Shift2  : Speed dependence of the line-shift in cm-1 (Input)
     #      sg      : Current WaveNumber of the Computation in cm-1 (Input).
     """
     return pcqsdhc(sg0,GamD,Gam0,Gam2,Shift0,Shift2,cZero,cZero,sg)
-    
+
 def PROFILE_VOIGT(sg0,GamD,Gam0,sg):
     """
     # Voigt profile based on HTP.
     # Input parameters:
     #   sg0: Unperturbed line position in cm-1 (Input).
     #   GamD: Doppler HWHM in cm-1 (Input)
-    #   Gam0: Speed-averaged line-width in cm-1 (Input).       
+    #   Gam0: Speed-averaged line-width in cm-1 (Input).
     #   sg: Current WaveNumber of the Computation in cm-1 (Input).
     """
     return PROFILE_HTP(sg0,GamD,Gam0,cZero,cZero,cZero,cZero,cZero,sg)
@@ -18365,7 +18365,7 @@ def PROFILE_LORENTZ(sg0,Gam0,sg):
     # Lorentz profile.
     # Input parameters:
     #   sg0: Unperturbed line position in cm-1 (Input).
-    #   Gam0: Speed-averaged line-width in cm-1 (Input).       
+    #   Gam0: Speed-averaged line-width in cm-1 (Input).
     #   sg: Current WaveNumber of the Computation in cm-1 (Input).
     """
     return Gam0/(pi*(Gam0**2+(sg-sg0)**2))
@@ -18505,7 +18505,7 @@ def getDefaultValuesForXsect(Components,SourceTables,Environment,OmegaRange,
 # save numpy arrays to file
 # arrays must have same dimensions
 def save_to_file(fname,fformat,*arg):
-    f = open(fname,'w')
+    f = open(fname,'w',newline='\n')
     for i in range(len(arg[0])):
         argline = []
         for j in range(len(arg)):
@@ -18530,7 +18530,7 @@ def absorptionCoefficient_HT(Components=None,SourceTables=None,partitionFunction
                                 WavenumberWingHW=None,WavenumberGrid=None,
                                 Diluent={},EnvDependences=None):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         Components:  list of tuples [(M,I,D)], where
                         M - HITRAN molecule number,
                         I - HITRAN isotopologue number,
@@ -18542,15 +18542,15 @@ def absorptionCoefficient_HT(Components=None,SourceTables=None,partitionFunction
                         'T' - temperature in Kelvin
                         Default={'p':1.,'T':296.}
         WavenumberRange:  wavenumber range to consider.
-        WavenumberStep:   wavenumber step to consider. 
-        WavenumberWing:   absolute wing for calculating a lineshape (in cm-1) 
+        WavenumberStep:   wavenumber step to consider.
+        WavenumberWing:   absolute wing for calculating a lineshape (in cm-1)
         WavenumberWingHW:  relative wing for calculating a lineshape (in halfwidths)
         IntensityThreshold:  threshold for intensities
         GammaL:  specifies broadening parameter ('gamma_air' or 'gamma_self')
         HITRAN_units:  use cm2/molecule (True) or cm-1 (False) for absorption coefficient
         File:   write output to file (if specified)
         Format:  c-format of file output (accounts for significant digits in WavenumberStep)
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         Wavenum: wavenumber grid with respect to parameters WavenumberRange and WavenumberStep
         Xsect: absorption coefficient calculated on the grid
     ---
@@ -18559,7 +18559,7 @@ def absorptionCoefficient_HT(Components=None,SourceTables=None,partitionFunction
         Absorption coefficient is calculated at arbitrary temperature and pressure.
         User can vary a wide range of parameters to control a process of calculation.
         The choise of these parameters depends on properties of a particular linelist.
-        Default values are a sort of guess which gives a decent precision (on average) 
+        Default values are a sort of guess which gives a decent precision (on average)
         for a reasonable amount of cpu time. To increase calculation accuracy,
         user should use a trial and error method.
     ---
@@ -18568,9 +18568,9 @@ def absorptionCoefficient_HT(Components=None,SourceTables=None,partitionFunction
                                               HITRAN_units=False,GammaL='gamma_self')
     ---
     """
-   
+
     warn('To get the most up-to-date version please check http://hitran.org/hapi')
-   
+
     # Parameters OmegaRange,OmegaStep,OmegaWing,OmegaWingHW, and OmegaGrid
     # are deprecated and given for backward compatibility with the older versions.
     if WavenumberRange:  OmegaRange=WavenumberRange
@@ -18582,13 +18582,13 @@ def absorptionCoefficient_HT(Components=None,SourceTables=None,partitionFunction
     # "bug" with 1-element list
     Components = listOfTuples(Components)
     SourceTables = listOfTuples(SourceTables)
-    
+
     # determine final input values
     Components,SourceTables,Environment,OmegaRange,OmegaStep,OmegaWing,\
     IntensityThreshold,Format = \
        getDefaultValuesForXsect(Components,SourceTables,Environment,OmegaRange,
                                 OmegaStep,OmegaWing,IntensityThreshold,Format)
-    
+
     # warn user about too large omega step
     if OmegaStep>0.1: warn('Big wavenumber step: possible accuracy decline')
 
@@ -18602,15 +18602,15 @@ def absorptionCoefficient_HT(Components=None,SourceTables=None,partitionFunction
         Omegas = arange_(OmegaRange[0],OmegaRange[1],OmegaStep) # fix
     number_of_points = len(Omegas)
     Xsect = zeros(number_of_points)
-       
+
     # reference temperature and pressure
     Tref = __FloatType__(296.) # K
     pref = __FloatType__(1.) # atm
-    
+
     # actual temperature and pressure
     T = Environment['T'] # K
     p = Environment['p'] # atm
-       
+
     # Find reference temperature
     TRanges = [(0,100),(100,200),(200,400),(400,float('inf'))]
     Trefs = [50.,150.,296.,700.]
@@ -18634,21 +18634,21 @@ def absorptionCoefficient_HT(Components=None,SourceTables=None,partitionFunction
                 raise Exception('cannot find component M,I = %d,%d.' % (M,I))
         ABUNDANCES[(M,I)] = ni
         NATURAL_ABUNDANCES[(M,I)] = ISO[(M,I)][ISO_INDEX['abundance']]
-        
+
     # precalculation of volume concentration
     if HITRAN_units:
         factor = __FloatType__(1.0)
     else:
         factor = volumeConcentration(p,T)
-    if VARIABLES['DEBUG']: print('absorptionCoefficient_HT: factor=%f'%factor)        
-        
+    if VARIABLES['DEBUG']: print('absorptionCoefficient_HT: factor=%f'%factor)
+
     # setup the default empty environment dependence function
     if not EnvDependences:
         EnvDependences = lambda ENV,LINE:{}
     Env = Environment.copy()
     Env['Tref'] = Tref
     Env['pref'] = pref
-  
+
     # setup the Diluent variable
     GammaL = GammaL.lower()
     if not Diluent:
@@ -18659,69 +18659,69 @@ def absorptionCoefficient_HT(Components=None,SourceTables=None,partitionFunction
         else:
             raise Exception('Unknown GammaL value: %s' % GammaL)
     if VARIABLES['DEBUG']: print('absorptionCoefficient_HT: Diluent=%s'%Diluent)
-        
+
     # Simple check
     for key in Diluent:
         val = Diluent[key]
         if val < 0 and val > 1:
             raise Exception('Diluent fraction must be in [0,1]')
-    
+
     # SourceTables contain multiple tables
     for TableName in SourceTables:
 
         # get the number of rows
         nline = LOCAL_TABLE_CACHE[TableName]['header']['number_of_rows']
-        
+
         # get parameter names for each table
         parnames = LOCAL_TABLE_CACHE[TableName]['data'].keys()
-        
+
         # loop through line centers (single stream)
         for RowID in range(nline):
-            
+
             # Get the custom environment dependences
             Line = {}
             for parname in parnames:
                 Line[parname] = LOCAL_TABLE_CACHE[TableName]['data'][parname][RowID]
             CustomEnvDependences = EnvDependences(Env,Line)
-            
+
             # get basic line parameters (lower level)
             LineCenterDB = LOCAL_TABLE_CACHE[TableName]['data']['nu'][RowID]
             LineIntensityDB = LOCAL_TABLE_CACHE[TableName]['data']['sw'][RowID]
             LowerStateEnergyDB = LOCAL_TABLE_CACHE[TableName]['data']['elower'][RowID]
             MoleculeNumberDB = LOCAL_TABLE_CACHE[TableName]['data']['molec_id'][RowID]
             IsoNumberDB = LOCAL_TABLE_CACHE[TableName]['data']['local_iso_id'][RowID]
-            
+
             # filter by molecule and isotopologue
             if (MoleculeNumberDB,IsoNumberDB) not in ABUNDANCES: continue
-            
+
             # partition functions for T and Tref
             SigmaT = partitionFunction(MoleculeNumberDB,IsoNumberDB,T)
             SigmaTref = partitionFunction(MoleculeNumberDB,IsoNumberDB,Tref)
-            
+
             # get all environment dependences from voigt parameters
-            
+
             #   intensity
             if 'sw' in CustomEnvDependences:
                 LineIntensity = CustomEnvDependences['sw']
             else:
                 LineIntensity = EnvironmentDependency_Intensity(LineIntensityDB,T,Tref,SigmaT,SigmaTref,
                                                                 LowerStateEnergyDB,LineCenterDB)
-            
+
             #   FILTER by LineIntensity: compare it with IntencityThreshold
             if LineIntensity < IntensityThreshold: continue
-            
+
             #   doppler broadening coefficient (GammaD)
             cMassMol = 1.66053873e-27 # hapi
             m = molecularMass(MoleculeNumberDB,IsoNumberDB) * cMassMol * 1000
             GammaD = sqrt(2*cBolts*T*log(2)/m/cc**2)*LineCenterDB
-            
+
             #   pressure broadening coefficient
             Gamma0 = 0.; Shift0 = 0.; Gamma2 = 0.; Shift2 = 0.; NuVC = 0.; EtaNumer = 0.;
             for species in Diluent:
                 species_lower = species.lower()
-                
+
                 abun = Diluent[species]
-                
+
                 # Search for broadening HWHM.
                 try:
                     # search for HT-style name
@@ -18736,7 +18736,7 @@ def absorptionCoefficient_HT(Components=None,SourceTables=None,partitionFunction
                     except KeyError:
                         Gamma0DB = 0.0
                         if VARIABLES['DEBUG']: print('absorptionCoefficient_HT: Gamma0DB=%f (not found in database)'%Gamma0DB)
-                
+
                 # Search for temperature exponent for broadening HWHM.
                 try:
                     # search for HT-style name
@@ -18755,13 +18755,13 @@ def absorptionCoefficient_HT(Components=None,SourceTables=None,partitionFunction
                             if VARIABLES['DEBUG']: print('absorptionCoefficient_HT: using n_air for self species because n_self=0.0')
                     except KeyError:
                         #print('TempRatioPowerDB is set to zero')
-                        #TempRatioPowerDB = 0                    
+                        #TempRatioPowerDB = 0
                         TempRatioPowerDB = LOCAL_TABLE_CACHE[TableName]['data']['n_air'][RowID]
                         if VARIABLES['DEBUG']: print('absorptionCoefficient_HT: TempRatioPowerDB=%f (found as n_air). Tref is set to 296K.'%TempRatioPowerDB)
-                
+
                 # Add to the final Gamma0
                 Gamma0T = CustomEnvDependences.get('gamma_HT_0_%s_%d'%(species_lower,TrefHT),
-                           CustomEnvDependences.get('gamma_%s'%species_lower, 
+                           CustomEnvDependences.get('gamma_%s'%species_lower,
                             EnvironmentDependency_Gamma0(Gamma0DB,T,Tref,p,pref,TempRatioPowerDB)))
                 Gamma0 += abun*Gamma0T
 
@@ -18779,7 +18779,7 @@ def absorptionCoefficient_HT(Components=None,SourceTables=None,partitionFunction
                     except KeyError:
                         Shift0DB = 0.0
                         if VARIABLES['DEBUG']: print('absorptionCoefficient_HT: Shift0DB=%f (not found in database)'%Shift0DB)
-                
+
                 # Search for temperature dependence for shift.
                 try:
                     # search for HT-style name
@@ -18801,7 +18801,7 @@ def absorptionCoefficient_HT(Components=None,SourceTables=None,partitionFunction
                                 CustomEnvDependences.get('deltap_%s'%species_lower,
                                  ((Shift0DB + deltap*(T-Tref))*p/pref)))
                 Shift0 += abun*Shift0T
-                
+
                 # Search for speed dependence for HWHM.
                 try:
                     Gamma2DB = LOCAL_TABLE_CACHE[TableName]['data']['gamma_HT_2_%s_%d'%(species_lower,TrefHT)][RowID]
@@ -18818,7 +18818,7 @@ def absorptionCoefficient_HT(Components=None,SourceTables=None,partitionFunction
                         if VARIABLES['DEBUG']: print('absorptionCoefficient_HT: Gamma2DB=%f (not found in database)'%Gamma2DB)
 
                 Gamma2 += abun*CustomEnvDependences.get('gamma_HT_2_%s_%d'%(species_lower,TrefHT),Gamma2DB*(p/pref))
-                
+
                 # Search for speed dependence for shift.
                 try:
                     Shift2DB = LOCAL_TABLE_CACHE[TableName]['data']['delta_HT_2_%s_%d'%(species_lower,TrefHT)][RowID]
@@ -18826,10 +18826,10 @@ def absorptionCoefficient_HT(Components=None,SourceTables=None,partitionFunction
                 except KeyError:
                     Shift2DB = 0.
                     if VARIABLES['DEBUG']: print('absorptionCoefficient_HT: Shift2DB=%f (not found in database)'%Shift2DB)
-                
+
                 Shift2 += abun*CustomEnvDependences.get('delta_HT_2_%s_%d'%(species_lower,TrefHT),
                                 Shift2DB*p/pref)
-                
+
                 # Search for frequency of VC
                 try:
                     NuVCDB = LOCAL_TABLE_CACHE[TableName]['data']['nu_HT_%s'%species_lower][RowID]
@@ -18837,7 +18837,7 @@ def absorptionCoefficient_HT(Components=None,SourceTables=None,partitionFunction
                 except KeyError:
                     NuVCDB = 0.
                     if VARIABLES['DEBUG']: print('absorptionCoefficient_HT: NuVCDB=%f (not found in database)'%NuVCDB)
-                
+
                 # Search for temperature exponent for frequency of VC
                 try:
                     KappaDB = LOCAL_TABLE_CACHE[TableName]['data']['kappa_HT_%s'%species_lower][RowID]
@@ -18845,10 +18845,10 @@ def absorptionCoefficient_HT(Components=None,SourceTables=None,partitionFunction
                 except KeyError:
                     KappaDB = 0.
                     if VARIABLES['DEBUG']: print('absorptionCoefficient_HT: KappaDB=%f (not found in database)'%KappaDB)
-                    
+
                 NuVC += abun*CustomEnvDependences.get('nu_HT_%s'%species_lower,
                              NuVCDB*(Tref/T)**KappaDB*p)
-                             
+
                 # Setup correlation parameter
                 try:
                     EtaDB = LOCAL_TABLE_CACHE[TableName]['data']['eta_HT_%s'%species_lower][RowID]
@@ -18856,11 +18856,11 @@ def absorptionCoefficient_HT(Components=None,SourceTables=None,partitionFunction
                 except KeyError:
                     EtaDB = 0.
                     if VARIABLES['DEBUG']: print('absorptionCoefficient_HT: EtaDB=%f (not found in database)'%EtaDB)
-                
+
                 EtaNumer += EtaDB*abun*(Gamma0T+1j*Shift0T)
-                
+
             Eta = EtaNumer/(Gamma0 + 1j*Shift0)
-                    
+
             #   get final wing of the line according to Gamma0, OmegaWingHW and OmegaWing
             OmegaWingF = max(OmegaWing,OmegaWingHW*Gamma0,OmegaWingHW*GammaD)
 
@@ -18870,10 +18870,10 @@ def absorptionCoefficient_HT(Components=None,SourceTables=None,partitionFunction
             Xsect[BoundIndexLower:BoundIndexUpper] += factor / NATURAL_ABUNDANCES[(MoleculeNumberDB,IsoNumberDB)] * \
                                                       ABUNDANCES[(MoleculeNumberDB,IsoNumberDB)] * \
                                                       LineIntensity * lineshape_vals
-   
+
     if File: save_to_file(File,Format,Omegas,Xsect)
     return Omegas,Xsect
-    
+
 
 def absorptionCoefficient_SDVoigt(Components=None,SourceTables=None,partitionFunction=PYTIPS2017,
                                 Environment=None,OmegaRange=None,OmegaStep=None,OmegaWing=None,
@@ -18885,7 +18885,7 @@ def absorptionCoefficient_SDVoigt(Components=None,SourceTables=None,partitionFun
                                 WavenumberWingHW=None,WavenumberGrid=None,
                                 Diluent={},EnvDependences=None):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         Components:  list of tuples [(M,I,D)], where
                         M - HITRAN molecule number,
                         I - HITRAN isotopologue number,
@@ -18897,15 +18897,15 @@ def absorptionCoefficient_SDVoigt(Components=None,SourceTables=None,partitionFun
                         'T' - temperature in Kelvin
                         Default={'p':1.,'T':296.}
         WavenumberRange:  wavenumber range to consider.
-        WavenumberStep:   wavenumber step to consider. 
-        WavenumberWing:   absolute wing for calculating a lineshape (in cm-1) 
+        WavenumberStep:   wavenumber step to consider.
+        WavenumberWing:   absolute wing for calculating a lineshape (in cm-1)
         WavenumberWingHW:  relative wing for calculating a lineshape (in halfwidths)
         IntensityThreshold:  threshold for intensities
         GammaL:  specifies broadening parameter ('gamma_air' or 'gamma_self')
         HITRAN_units:  use cm2/molecule (True) or cm-1 (False) for absorption coefficient
         File:   write output to file (if specified)
         Format:  c-format of file output (accounts for significant digits in WavenumberStep)
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         Wavenum: wavenumber grid with respect to parameters WavenumberRange and WavenumberStep
         Xsect: absorption coefficient calculated on the grid
     ---
@@ -18914,7 +18914,7 @@ def absorptionCoefficient_SDVoigt(Components=None,SourceTables=None,partitionFun
         Absorption coefficient is calculated at arbitrary temperature and pressure.
         User can vary a wide range of parameters to control a process of calculation.
         The choise of these parameters depends on properties of a particular linelist.
-        Default values are a sort of guess which gives a decent precision (on average) 
+        Default values are a sort of guess which gives a decent precision (on average)
         for a reasonable amount of cpu time. To increase calculation accuracy,
         user should use a trial and error method.
     ---
@@ -18923,9 +18923,9 @@ def absorptionCoefficient_SDVoigt(Components=None,SourceTables=None,partitionFun
                                               HITRAN_units=False,GammaL='gamma_self')
     ---
     """
-   
+
     warn('To get the most up-to-date version please check http://hitran.org/hapi')
-   
+
     # Paremeters OmegaRange,OmegaStep,OmegaWing,OmegaWingHW, and OmegaGrid
     # are deprecated and given for backward compatibility with the older versions.
     if WavenumberRange:  OmegaRange=WavenumberRange
@@ -18937,13 +18937,13 @@ def absorptionCoefficient_SDVoigt(Components=None,SourceTables=None,partitionFun
     # "bug" with 1-element list
     Components = listOfTuples(Components)
     SourceTables = listOfTuples(SourceTables)
-    
+
     # determine final input values
     Components,SourceTables,Environment,OmegaRange,OmegaStep,OmegaWing,\
     IntensityThreshold,Format = \
        getDefaultValuesForXsect(Components,SourceTables,Environment,OmegaRange,
                                 OmegaStep,OmegaWing,IntensityThreshold,Format)
-    
+
     # warn user about too large omega step
     if OmegaStep>0.1: warn('Big wavenumber step: possible accuracy decline')
 
@@ -18957,15 +18957,15 @@ def absorptionCoefficient_SDVoigt(Components=None,SourceTables=None,partitionFun
         Omegas = arange_(OmegaRange[0],OmegaRange[1],OmegaStep) # fix
     number_of_points = len(Omegas)
     Xsect = zeros(number_of_points)
-       
+
     # reference temperature and pressure
     Tref = __FloatType__(296.) # K
     pref = __FloatType__(1.) # atm
-    
+
     # actual temperature and pressure
     T = Environment['T'] # K
     p = Environment['p'] # atm
-       
+
     # create dictionary from Components
     ABUNDANCES = {}
     NATURAL_ABUNDANCES = {}
@@ -18981,20 +18981,20 @@ def absorptionCoefficient_SDVoigt(Components=None,SourceTables=None,partitionFun
                 raise Exception('cannot find component M,I = %d,%d.' % (M,I))
         ABUNDANCES[(M,I)] = ni
         NATURAL_ABUNDANCES[(M,I)] = ISO[(M,I)][ISO_INDEX['abundance']]
-        
+
     # precalculation of volume concentration
     if HITRAN_units:
         factor = __FloatType__(1.0)
     else:
-        factor = volumeConcentration(p,T) 
-        
+        factor = volumeConcentration(p,T)
+
     # setup the default empty environment dependence function
     if not EnvDependences:
         EnvDependences = lambda ENV,LINE:{}
     Env = Environment.copy()
     Env['Tref'] = Tref
     Env['pref'] = pref
-  
+
     # setup the Diluent variable
     GammaL = GammaL.lower()
     if not Diluent:
@@ -19004,84 +19004,84 @@ def absorptionCoefficient_SDVoigt(Components=None,SourceTables=None,partitionFun
             Diluent = {'self':1.}
         else:
             raise Exception('Unknown GammaL value: %s' % GammaL)
-        
+
     # Simple check
     for key in Diluent:
         val = Diluent[key]
         if val < 0 and val > 1:
             raise Exception('Diluent fraction must be in [0,1]')
-    
+
     # SourceTables contain multiple tables
     for TableName in SourceTables:
 
         # get the number of rows
         nline = LOCAL_TABLE_CACHE[TableName]['header']['number_of_rows']
-        
+
         # get parameter names for each table
         parnames = LOCAL_TABLE_CACHE[TableName]['data'].keys()
-        
+
         # loop through line centers (single stream)
         for RowID in range(nline):
-            
+
             # Get the custom environment dependences
             Line = {}
             for parname in parnames:
                 Line[parname] = LOCAL_TABLE_CACHE[TableName]['data'][parname][RowID]
             CustomEnvDependences = EnvDependences(Env,Line)
-            
+
             # get basic line parameters (lower level)
             LineCenterDB = LOCAL_TABLE_CACHE[TableName]['data']['nu'][RowID]
             LineIntensityDB = LOCAL_TABLE_CACHE[TableName]['data']['sw'][RowID]
             LowerStateEnergyDB = LOCAL_TABLE_CACHE[TableName]['data']['elower'][RowID]
             MoleculeNumberDB = LOCAL_TABLE_CACHE[TableName]['data']['molec_id'][RowID]
             IsoNumberDB = LOCAL_TABLE_CACHE[TableName]['data']['local_iso_id'][RowID]
-            
+
             # filter by molecule and isotopologue
             if (MoleculeNumberDB,IsoNumberDB) not in ABUNDANCES: continue
-            
+
             # partition functions for T and Tref
             SigmaT = partitionFunction(MoleculeNumberDB,IsoNumberDB,T)
             SigmaTref = partitionFunction(MoleculeNumberDB,IsoNumberDB,Tref)
-            
+
             # get all environment dependences from voigt parameters
-            
+
             #   intensity
             if 'sw' in CustomEnvDependences:
                 LineIntensity = CustomEnvDependences['sw']
             else:
                 LineIntensity = EnvironmentDependency_Intensity(LineIntensityDB,T,Tref,SigmaT,SigmaTref,
                                                                 LowerStateEnergyDB,LineCenterDB)
-            
+
             #   FILTER by LineIntensity: compare it with IntencityThreshold
             if LineIntensity < IntensityThreshold: continue
-            
+
             #   doppler broadening coefficient (GammaD)
             cMassMol = 1.66053873e-27 # hapi
             m = molecularMass(MoleculeNumberDB,IsoNumberDB) * cMassMol * 1000
             GammaD = sqrt(2*cBolts*T*log(2)/m/cc**2)*LineCenterDB
-            
+
             #   pressure broadening coefficient
             Gamma0 = 0.; Shift0 = 0.; Gamma2 = 0.; Shift2 = 0.
             for species in Diluent:
                 species_lower = species.lower()
-                
+
                 abun = Diluent[species]
-                
+
                 gamma_name = 'gamma_' + species_lower
                 try:
                     Gamma0DB = LOCAL_TABLE_CACHE[TableName]['data'][gamma_name][RowID]
                 except:
                     Gamma0DB = 0.0
-                
+
                 n_name = 'n_' + species_lower
                 try:
                     TempRatioPowerDB = LOCAL_TABLE_CACHE[TableName]['data'][n_name][RowID]
                     if species_lower == 'self' and TempRatioPowerDB == 0.:
                         TempRatioPowerDB = LOCAL_TABLE_CACHE[TableName]['data']['n_air'][RowID] # same for self as for air
                 except:
-                    #TempRatioPowerDB = 0                    
+                    #TempRatioPowerDB = 0
                     TempRatioPowerDB = LOCAL_TABLE_CACHE[TableName]['data']['n_air'][RowID]
-                
+
                 # Add to the final Gamma0
                 Gamma0 += abun*CustomEnvDependences.get(gamma_name, # default ->
                           EnvironmentDependency_Gamma0(Gamma0DB,T,Tref,p,pref,TempRatioPowerDB))
@@ -19091,7 +19091,7 @@ def absorptionCoefficient_SDVoigt(Components=None,SourceTables=None,partitionFun
                     Shift0DB = LOCAL_TABLE_CACHE[TableName]['data'][delta_name][RowID]
                 except:
                     Shift0DB = 0.0
-                
+
                 deltap_name = 'deltap_' + species_lower
                 try:
                     deltap = LOCAL_TABLE_CACHE[TableName]['data'][deltap_name][RowID]
@@ -19100,7 +19100,7 @@ def absorptionCoefficient_SDVoigt(Components=None,SourceTables=None,partitionFun
 
                 Shift0 += abun*CustomEnvDependences.get(delta_name, # default ->
                           ((Shift0DB + deltap*(T-Tref))*p/pref))
-            
+
                 SD_name = 'SD_' + species_lower
                 try:
                     SDDB = LOCAL_TABLE_CACHE[TableName]['data'][SD_name][RowID]
@@ -19119,11 +19119,11 @@ def absorptionCoefficient_SDVoigt(Components=None,SourceTables=None,partitionFun
             Xsect[BoundIndexLower:BoundIndexUpper] += factor / NATURAL_ABUNDANCES[(MoleculeNumberDB,IsoNumberDB)] * \
                                                       ABUNDANCES[(MoleculeNumberDB,IsoNumberDB)] * \
                                                       LineIntensity * lineshape_vals
-   
+
     if File: save_to_file(File,Format,Omegas,Xsect)
     return Omegas,Xsect
-    
-    
+
+
 def absorptionCoefficient_Voigt(Components=None,SourceTables=None,partitionFunction=PYTIPS2017,
                                 Environment=None,OmegaRange=None,OmegaStep=None,OmegaWing=None,
                                 IntensityThreshold=DefaultIntensityThreshold,
@@ -19134,7 +19134,7 @@ def absorptionCoefficient_Voigt(Components=None,SourceTables=None,partitionFunct
                                 WavenumberWingHW=None,WavenumberGrid=None,
                                 Diluent={},EnvDependences=None):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         Components:  list of tuples [(M,I,D)], where
                         M - HITRAN molecule number,
                         I - HITRAN isotopologue number,
@@ -19146,15 +19146,15 @@ def absorptionCoefficient_Voigt(Components=None,SourceTables=None,partitionFunct
                         'T' - temperature in Kelvin
                         Default={'p':1.,'T':296.}
         WavenumberRange:  wavenumber range to consider.
-        WavenumberStep:   wavenumber step to consider. 
-        WavenumberWing:   absolute wing for calculating a lineshape (in cm-1) 
+        WavenumberStep:   wavenumber step to consider.
+        WavenumberWing:   absolute wing for calculating a lineshape (in cm-1)
         WavenumberWingHW:  relative wing for calculating a lineshape (in halfwidths)
         IntensityThreshold:  threshold for intensities
         GammaL:  specifies broadening parameter ('gamma_air' or 'gamma_self')
         HITRAN_units:  use cm2/molecule (True) or cm-1 (False) for absorption coefficient
         File:   write output to file (if specified)
         Format:  c-format of file output (accounts for significant digits in WavenumberStep)
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         Wavenum: wavenumber grid with respect to parameters WavenumberRange and WavenumberStep
         Xsect: absorption coefficient calculated on the grid
     ---
@@ -19163,7 +19163,7 @@ def absorptionCoefficient_Voigt(Components=None,SourceTables=None,partitionFunct
         Absorption coefficient is calculated at arbitrary temperature and pressure.
         User can vary a wide range of parameters to control a process of calculation.
         The choise of these parameters depends on properties of a particular linelist.
-        Default values are a sort of guess which gives a decent precision (on average) 
+        Default values are a sort of guess which gives a decent precision (on average)
         for a reasonable amount of cpu time. To increase calculation accuracy,
         user should use a trial and error method.
     ---
@@ -19172,7 +19172,7 @@ def absorptionCoefficient_Voigt(Components=None,SourceTables=None,partitionFunct
                                               HITRAN_units=False,GammaL='gamma_self')
     ---
     """
-   
+
     # Paremeters OmegaRange,OmegaStep,OmegaWing,OmegaWingHW, and OmegaGrid
     # are deprecated and given for backward compatibility with the older versions.
     if WavenumberRange:  OmegaRange=WavenumberRange
@@ -19184,13 +19184,13 @@ def absorptionCoefficient_Voigt(Components=None,SourceTables=None,partitionFunct
     # "bug" with 1-element list
     Components = listOfTuples(Components)
     SourceTables = listOfTuples(SourceTables)
-    
+
     # determine final input values
     Components,SourceTables,Environment,OmegaRange,OmegaStep,OmegaWing,\
     IntensityThreshold,Format = \
        getDefaultValuesForXsect(Components,SourceTables,Environment,OmegaRange,
                                 OmegaStep,OmegaWing,IntensityThreshold,Format)
-    
+
     # warn user about too large omega step
     if OmegaStep>0.1: warn('Big wavenumber step: possible accuracy decline')
 
@@ -19204,15 +19204,15 @@ def absorptionCoefficient_Voigt(Components=None,SourceTables=None,partitionFunct
         Omegas = arange_(OmegaRange[0],OmegaRange[1],OmegaStep) # fix
     number_of_points = len(Omegas)
     Xsect = zeros(number_of_points)
-       
+
     # reference temperature and pressure
     Tref = __FloatType__(296.) # K
     pref = __FloatType__(1.) # atm
-    
+
     # actual temperature and pressure
     T = Environment['T'] # K
     p = Environment['p'] # atm
-       
+
     # create dictionary from Components
     ABUNDANCES = {}
     NATURAL_ABUNDANCES = {}
@@ -19228,20 +19228,20 @@ def absorptionCoefficient_Voigt(Components=None,SourceTables=None,partitionFunct
                 raise Exception('cannot find component M,I = %d,%d.' % (M,I))
         ABUNDANCES[(M,I)] = ni
         NATURAL_ABUNDANCES[(M,I)] = ISO[(M,I)][ISO_INDEX['abundance']]
-        
+
     # precalculation of volume concentration
     if HITRAN_units:
         factor = __FloatType__(1.0)
     else:
-        factor = volumeConcentration(p,T) 
-        
+        factor = volumeConcentration(p,T)
+
     # setup the default empty environment dependence function
     if not EnvDependences:
         EnvDependences = lambda ENV,LINE:{}
     Env = Environment.copy()
     Env['Tref'] = Tref
     Env['pref'] = pref
-  
+
     # setup the Diluent variable
     GammaL = GammaL.lower()
     if not Diluent:
@@ -19251,84 +19251,84 @@ def absorptionCoefficient_Voigt(Components=None,SourceTables=None,partitionFunct
             Diluent = {'self':1.}
         else:
             raise Exception('Unknown GammaL value: %s' % GammaL)
-        
+
     # Simple check
     for key in Diluent:
         val = Diluent[key]
         if val < 0 and val > 1:
             raise Exception('Diluent fraction must be in [0,1]')
-    
+
     # SourceTables contain multiple tables
     for TableName in SourceTables:
 
         # get the number of rows
         nline = LOCAL_TABLE_CACHE[TableName]['header']['number_of_rows']
-        
+
         # get parameter names for each table
         parnames = LOCAL_TABLE_CACHE[TableName]['data'].keys()
-        
+
         # loop through line centers (single stream)
         for RowID in range(nline):
-            
+
             # Get the custom environment dependences
             Line = {}
             for parname in parnames:
                 Line[parname] = LOCAL_TABLE_CACHE[TableName]['data'][parname][RowID]
             CustomEnvDependences = EnvDependences(Env,Line)
-            
+
             # get basic line parameters (lower level)
             LineCenterDB = LOCAL_TABLE_CACHE[TableName]['data']['nu'][RowID]
             LineIntensityDB = LOCAL_TABLE_CACHE[TableName]['data']['sw'][RowID]
             LowerStateEnergyDB = LOCAL_TABLE_CACHE[TableName]['data']['elower'][RowID]
             MoleculeNumberDB = LOCAL_TABLE_CACHE[TableName]['data']['molec_id'][RowID]
             IsoNumberDB = LOCAL_TABLE_CACHE[TableName]['data']['local_iso_id'][RowID]
-            
+
             # filter by molecule and isotopologue
             if (MoleculeNumberDB,IsoNumberDB) not in ABUNDANCES: continue
-            
+
             # partition functions for T and Tref
             SigmaT = partitionFunction(MoleculeNumberDB,IsoNumberDB,T)
             SigmaTref = partitionFunction(MoleculeNumberDB,IsoNumberDB,Tref)
-            
+
             # get all environment dependences from voigt parameters
-            
+
             #   intensity
             if 'sw' in CustomEnvDependences:
                 LineIntensity = CustomEnvDependences['sw']
             else:
                 LineIntensity = EnvironmentDependency_Intensity(LineIntensityDB,T,Tref,SigmaT,SigmaTref,
                                                                 LowerStateEnergyDB,LineCenterDB)
-            
+
             #   FILTER by LineIntensity: compare it with IntencityThreshold
             if LineIntensity < IntensityThreshold: continue
-            
+
             #   doppler broadening coefficient (GammaD)
             cMassMol = 1.66053873e-27 # hapi
             m = molecularMass(MoleculeNumberDB,IsoNumberDB) * cMassMol * 1000
             GammaD = sqrt(2*cBolts*T*log(2)/m/cc**2)*LineCenterDB
-            
+
             #   pressure broadening coefficient
             Gamma0 = 0.; Shift0 = 0.;
             for species in Diluent:
                 species_lower = species.lower()
-                
+
                 abun = Diluent[species]
-                
+
                 gamma_name = 'gamma_' + species_lower
                 try:
                     Gamma0DB = LOCAL_TABLE_CACHE[TableName]['data'][gamma_name][RowID]
                 except:
                     Gamma0DB = 0.0
-                
+
                 n_name = 'n_' + species_lower
                 try:
                     TempRatioPowerDB = LOCAL_TABLE_CACHE[TableName]['data'][n_name][RowID]
                     if species_lower == 'self' and TempRatioPowerDB == 0.:
                         TempRatioPowerDB = LOCAL_TABLE_CACHE[TableName]['data']['n_air'][RowID] # same for self as for air
                 except:
-                    #TempRatioPowerDB = 0                    
+                    #TempRatioPowerDB = 0
                     TempRatioPowerDB = LOCAL_TABLE_CACHE[TableName]['data']['n_air'][RowID]
-                
+
                 # Add to the final Gamma0
                 Gamma0 += abun*CustomEnvDependences.get(gamma_name, # default ->
                           EnvironmentDependency_Gamma0(Gamma0DB,T,Tref,p,pref,TempRatioPowerDB))
@@ -19338,7 +19338,7 @@ def absorptionCoefficient_Voigt(Components=None,SourceTables=None,partitionFunct
                     Shift0DB = LOCAL_TABLE_CACHE[TableName]['data'][delta_name][RowID]
                 except:
                     Shift0DB = 0.0
-                
+
                 deltap_name = 'deltap_' + species_lower
                 try:
                     deltap = LOCAL_TABLE_CACHE[TableName]['data'][deltap_name][RowID]
@@ -19347,7 +19347,7 @@ def absorptionCoefficient_Voigt(Components=None,SourceTables=None,partitionFunct
 
                 Shift0 += abun*CustomEnvDependences.get(delta_name, # default ->
                           ((Shift0DB + deltap*(T-Tref))*p/pref))
-            
+
             #   get final wing of the line according to Gamma0, OmegaWingHW and OmegaWing
             OmegaWingF = max(OmegaWing,OmegaWingHW*Gamma0,OmegaWingHW*GammaD)
 
@@ -19357,10 +19357,10 @@ def absorptionCoefficient_Voigt(Components=None,SourceTables=None,partitionFunct
             Xsect[BoundIndexLower:BoundIndexUpper] += factor / NATURAL_ABUNDANCES[(MoleculeNumberDB,IsoNumberDB)] * \
                                                       ABUNDANCES[(MoleculeNumberDB,IsoNumberDB)] * \
                                                       LineIntensity * lineshape_vals
-    
+
     if File: save_to_file(File,Format,Omegas,Xsect)
     return Omegas,Xsect
-    
+
 
 def absorptionCoefficient_Lorentz(Components=None,SourceTables=None,partitionFunction=PYTIPS2017,
                                 Environment=None,OmegaRange=None,OmegaStep=None,OmegaWing=None,
@@ -19372,7 +19372,7 @@ def absorptionCoefficient_Lorentz(Components=None,SourceTables=None,partitionFun
                                 WavenumberWingHW=None,WavenumberGrid=None,
                                 Diluent={},EnvDependences=None):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         Components:  list of tuples [(M,I,D)], where
                         M - HITRAN molecule number,
                         I - HITRAN isotopologue number,
@@ -19384,15 +19384,15 @@ def absorptionCoefficient_Lorentz(Components=None,SourceTables=None,partitionFun
                         'T' - temperature in Kelvin
                         Default={'p':1.,'T':296.}
         WavenumberRange:  wavenumber range to consider.
-        WavenumberStep:   wavenumber step to consider. 
-        WavenumberWing:   absolute wing for calculating a lineshape (in cm-1) 
+        WavenumberStep:   wavenumber step to consider.
+        WavenumberWing:   absolute wing for calculating a lineshape (in cm-1)
         WavenumberWingHW:  relative wing for calculating a lineshape (in halfwidths)
         IntensityThreshold:  threshold for intensities
         GammaL:  specifies broadening parameter ('gamma_air' or 'gamma_self')
         HITRAN_units:  use cm2/molecule (True) or cm-1 (False) for absorption coefficient
         File:   write output to file (if specified)
         Format:  c-format of file output (accounts for significant digits in WavenumberStep)
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         Wavenum: wavenumber grid with respect to parameters WavenumberRange and WavenumberStep
         Xsect: absorption coefficient calculated on the grid
     ---
@@ -19401,7 +19401,7 @@ def absorptionCoefficient_Lorentz(Components=None,SourceTables=None,partitionFun
         Absorption coefficient is calculated at arbitrary temperature and pressure.
         User can vary a wide range of parameters to control a process of calculation.
         The choise of these parameters depends on properties of a particular linelist.
-        Default values are a sort of guess which gives a decent precision (on average) 
+        Default values are a sort of guess which gives a decent precision (on average)
         for a reasonable amount of cpu time. To increase calculation accuracy,
         user should use a trial and error method.
     ---
@@ -19410,7 +19410,7 @@ def absorptionCoefficient_Lorentz(Components=None,SourceTables=None,partitionFun
                                               HITRAN_units=False,GammaL='gamma_self')
     ---
     """
-   
+
     # Paremeters OmegaRange,OmegaStep,OmegaWing,OmegaWingHW, and OmegaGrid
     # are deprecated and given for backward compatibility with the older versions.
     if WavenumberRange:  OmegaRange=WavenumberRange
@@ -19422,13 +19422,13 @@ def absorptionCoefficient_Lorentz(Components=None,SourceTables=None,partitionFun
     # "bug" with 1-element list
     Components = listOfTuples(Components)
     SourceTables = listOfTuples(SourceTables)
-    
+
     # determine final input values
     Components,SourceTables,Environment,OmegaRange,OmegaStep,OmegaWing,\
     IntensityThreshold,Format = \
        getDefaultValuesForXsect(Components,SourceTables,Environment,OmegaRange,
                                 OmegaStep,OmegaWing,IntensityThreshold,Format)
-    
+
     # warn user about too large omega step
     if OmegaStep>0.1: warn('Big wavenumber step: possible accuracy decline')
 
@@ -19442,15 +19442,15 @@ def absorptionCoefficient_Lorentz(Components=None,SourceTables=None,partitionFun
         Omegas = arange_(OmegaRange[0],OmegaRange[1],OmegaStep) # fix
     number_of_points = len(Omegas)
     Xsect = zeros(number_of_points)
-       
+
     # reference temperature and pressure
     Tref = __FloatType__(296.) # K
     pref = __FloatType__(1.) # atm
-    
+
     # actual temperature and pressure
     T = Environment['T'] # K
     p = Environment['p'] # atm
-       
+
     # create dictionary from Components
     ABUNDANCES = {}
     NATURAL_ABUNDANCES = {}
@@ -19466,20 +19466,20 @@ def absorptionCoefficient_Lorentz(Components=None,SourceTables=None,partitionFun
                 raise Exception('cannot find component M,I = %d,%d.' % (M,I))
         ABUNDANCES[(M,I)] = ni
         NATURAL_ABUNDANCES[(M,I)] = ISO[(M,I)][ISO_INDEX['abundance']]
-        
+
     # precalculation of volume concentration
     if HITRAN_units:
         factor = __FloatType__(1.0)
     else:
-        factor = volumeConcentration(p,T) 
-        
+        factor = volumeConcentration(p,T)
+
     # setup the default empty environment dependence function
     if not EnvDependences:
         EnvDependences = lambda ENV,LINE:{}
     Env = Environment.copy()
     Env['Tref'] = Tref
     Env['pref'] = pref
-  
+
     # setup the Diluent variable
     GammaL = GammaL.lower()
     if not Diluent:
@@ -19489,79 +19489,79 @@ def absorptionCoefficient_Lorentz(Components=None,SourceTables=None,partitionFun
             Diluent = {'self':1.}
         else:
             raise Exception('Unknown GammaL value: %s' % GammaL)
-        
+
     # Simple check
     for key in Diluent:
         val = Diluent[key]
         if val < 0 and val > 1:
             raise Exception('Diluent fraction must be in [0,1]')
-    
+
     # SourceTables contain multiple tables
     for TableName in SourceTables:
 
         # get the number of rows
         nline = LOCAL_TABLE_CACHE[TableName]['header']['number_of_rows']
-        
+
         # get parameter names for each table
         parnames = LOCAL_TABLE_CACHE[TableName]['data'].keys()
-        
+
         # loop through line centers (single stream)
         for RowID in range(nline):
-            
+
             # Get the custom environment dependences
             Line = {}
             for parname in parnames:
                 Line[parname] = LOCAL_TABLE_CACHE[TableName]['data'][parname][RowID]
             CustomEnvDependences = EnvDependences(Env,Line)
-            
+
             # get basic line parameters (lower level)
             LineCenterDB = LOCAL_TABLE_CACHE[TableName]['data']['nu'][RowID]
             LineIntensityDB = LOCAL_TABLE_CACHE[TableName]['data']['sw'][RowID]
             LowerStateEnergyDB = LOCAL_TABLE_CACHE[TableName]['data']['elower'][RowID]
             MoleculeNumberDB = LOCAL_TABLE_CACHE[TableName]['data']['molec_id'][RowID]
             IsoNumberDB = LOCAL_TABLE_CACHE[TableName]['data']['local_iso_id'][RowID]
-            
+
             # filter by molecule and isotopologue
             if (MoleculeNumberDB,IsoNumberDB) not in ABUNDANCES: continue
-            
+
             # partition functions for T and Tref
             SigmaT = partitionFunction(MoleculeNumberDB,IsoNumberDB,T)
             SigmaTref = partitionFunction(MoleculeNumberDB,IsoNumberDB,Tref)
-            
+
             # get all environment dependences from voigt parameters
-            
+
             #   intensity
             if 'sw' in CustomEnvDependences:
                 LineIntensity = CustomEnvDependences['sw']
             else:
                 LineIntensity = EnvironmentDependency_Intensity(LineIntensityDB,T,Tref,SigmaT,SigmaTref,
                                                                 LowerStateEnergyDB,LineCenterDB)
-            
+
             #   FILTER by LineIntensity: compare it with IntencityThreshold
             if LineIntensity < IntensityThreshold: continue
-                       
+
             #   pressure broadening coefficient
             Gamma0 = 0.; Shift0 = 0.;
             for species in Diluent:
                 species_lower = species.lower()
-                
+
                 abun = Diluent[species]
-                
+
                 gamma_name = 'gamma_' + species_lower
                 try:
                     Gamma0DB = LOCAL_TABLE_CACHE[TableName]['data'][gamma_name][RowID]
                 except:
                     Gamma0DB = 0.0
-                
+
                 n_name = 'n_' + species_lower
                 try:
                     TempRatioPowerDB = LOCAL_TABLE_CACHE[TableName]['data'][n_name][RowID]
                     if species_lower == 'self' and TempRatioPowerDB == 0.:
                         TempRatioPowerDB = LOCAL_TABLE_CACHE[TableName]['data']['n_air'][RowID] # same for self as for air
                 except:
-                    #TempRatioPowerDB = 0                    
+                    #TempRatioPowerDB = 0
                     TempRatioPowerDB = LOCAL_TABLE_CACHE[TableName]['data']['n_air'][RowID]
-                
+
                 # Add to the final Gamma0
                 Gamma0 += abun*CustomEnvDependences.get(gamma_name, # default ->
                           EnvironmentDependency_Gamma0(Gamma0DB,T,Tref,p,pref,TempRatioPowerDB))
@@ -19571,7 +19571,7 @@ def absorptionCoefficient_Lorentz(Components=None,SourceTables=None,partitionFun
                     Shift0DB = LOCAL_TABLE_CACHE[TableName]['data'][delta_name][RowID]
                 except:
                     Shift0DB = 0.0
-                
+
                 deltap_name = 'deltap_' + species_lower
                 try:
                     deltap = LOCAL_TABLE_CACHE[TableName]['data'][deltap_name][RowID]
@@ -19580,7 +19580,7 @@ def absorptionCoefficient_Lorentz(Components=None,SourceTables=None,partitionFun
 
                 Shift0 += abun*CustomEnvDependences.get(delta_name, # default ->
                           ((Shift0DB + deltap*(T-Tref))*p/pref))
-            
+
             #   get final wing of the line according to Gamma0, OmegaWingHW and OmegaWing
             OmegaWingF = max(OmegaWing,OmegaWingHW*Gamma0)
 
@@ -19590,16 +19590,16 @@ def absorptionCoefficient_Lorentz(Components=None,SourceTables=None,partitionFun
             Xsect[BoundIndexLower:BoundIndexUpper] += factor / NATURAL_ABUNDANCES[(MoleculeNumberDB,IsoNumberDB)] * \
                                                       ABUNDANCES[(MoleculeNumberDB,IsoNumberDB)] * \
                                                       LineIntensity * lineshape_vals
-    
+
     if File: save_to_file(File,Format,Omegas,Xsect)
     return Omegas,Xsect
-    
+
 # Alias for a profile selector
 absorptionCoefficient = absorptionCoefficient_HT
-    
+
 # ==========================================================================================
 # =========================== /NEW ABSORPTION COEFFICIENT ===================================
-# ==========================================================================================    
+# ==========================================================================================
 
 # calculate apsorption for Doppler profile
 def absorptionCoefficient_Doppler(Components=None,SourceTables=None,partitionFunction=PYTIPS2017,
@@ -19611,9 +19611,9 @@ def absorptionCoefficient_Doppler(Components=None,SourceTables=None,partitionFun
                                   GammaL='dummy', HITRAN_units=True, LineShift=True,
                                   File=None, Format=None, OmegaGrid=None,
                                   WavenumberRange=None,WavenumberStep=None,WavenumberWing=None,
-                                  WavenumberWingHW=None,WavenumberGrid=None,Diluent=None):   
+                                  WavenumberWingHW=None,WavenumberGrid=None,Diluent=None):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         Components:  list of tuples [(M,I,D)], where
                         M - HITRAN molecule number,
                         I - HITRAN isotopologue number,
@@ -19625,15 +19625,15 @@ def absorptionCoefficient_Doppler(Components=None,SourceTables=None,partitionFun
                         'T' - temperature in Kelvin
                         Default={'p':1.,'T':296.}
         WavenumberRange:  wavenumber range to consider.
-        WavenumberStep:   wavenumber step to consider. 
-        WavenumberWing:   absolute wing for calculating a lineshape (in cm-1) 
+        WavenumberStep:   wavenumber step to consider.
+        WavenumberWing:   absolute wing for calculating a lineshape (in cm-1)
         WavenumberWingHW:  relative wing for calculating a lineshape (in halfwidths)
         IntensityThreshold:  threshold for intensities
         GammaL:  specifies broadening parameter ('gamma_air' or 'gamma_self')
         HITRAN_units:  use cm2/molecule (True) or cm-1 (False) for absorption coefficient
         File:   write output to file (if specified)
         Format:  c-format of file output (accounts for significant digits in WavenumberStep)
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         Wavenum: wavenumber grid with respect to parameters OmegaRange and OmegaStep
         Xsect: absorption coefficient calculated on the grid
     ---
@@ -19642,7 +19642,7 @@ def absorptionCoefficient_Doppler(Components=None,SourceTables=None,partitionFun
         Absorption coefficient is calculated at arbitrary temperature and pressure.
         User can vary a wide range of parameters to control a process of calculation.
         The choise of these parameters depends on properties of a particular linelist.
-        Default values are a sort of guess which give a decent precision (on average) 
+        Default values are a sort of guess which give a decent precision (on average)
         for a reasonable amount of cpu time. To increase calculation accuracy,
         user should use a trial and error method.
     ---
@@ -19657,11 +19657,11 @@ def absorptionCoefficient_Doppler(Components=None,SourceTables=None,partitionFun
     if WavenumberWing:   OmegaWing=WavenumberWing
     if WavenumberWingHW: OmegaWingHW=WavenumberWingHW
     if WavenumberGrid:   OmegaGrid=WavenumberGrid
-    
+
     # "bug" with 1-element list
     Components = listOfTuples(Components)
     SourceTables = listOfTuples(SourceTables)
-    
+
     # determine final input values
     Components,SourceTables,Environment,OmegaRange,OmegaStep,OmegaWing,\
     IntensityThreshold,Format = \
@@ -19669,7 +19669,7 @@ def absorptionCoefficient_Doppler(Components=None,SourceTables=None,partitionFun
                                 OmegaStep,OmegaWing,IntensityThreshold,Format)
     # special for Doppler case: set OmegaStep to a smaller value
     if not OmegaStep: OmegaStep = 0.001
-                
+
     # warn user about too large omega step
     if OmegaStep>0.005: warn('Big wavenumber step: possible accuracy decline')
 
@@ -19683,15 +19683,15 @@ def absorptionCoefficient_Doppler(Components=None,SourceTables=None,partitionFun
         Omegas = arange_(OmegaRange[0],OmegaRange[1],OmegaStep) # fix
     number_of_points = len(Omegas)
     Xsect = zeros(number_of_points)
-       
+
     # reference temperature and pressure
     Tref = __FloatType__(296.) # K
     pref = __FloatType__(1.) # atm
-    
+
     # actual temperature and pressure
     T = Environment['T'] # K
     p = Environment['p'] # atm
-       
+
     # create dictionary from Components
     ABUNDANCES = {}
     NATURAL_ABUNDANCES = {}
@@ -19707,22 +19707,22 @@ def absorptionCoefficient_Doppler(Components=None,SourceTables=None,partitionFun
                 raise Exception('cannot find component M,I = %d,%d.' % (M,I))
         ABUNDANCES[(M,I)] = ni
         NATURAL_ABUNDANCES[(M,I)] = ISO[(M,I)][ISO_INDEX['abundance']]
-        
+
     # precalculation of volume concentration
     if HITRAN_units:
         factor = __FloatType__(1.0)
     else:
-        factor = volumeConcentration(p,T) 
-        
+        factor = volumeConcentration(p,T)
+
     # SourceTables contain multiple tables
     for TableName in SourceTables:
 
         # get line centers
         nline = LOCAL_TABLE_CACHE[TableName]['header']['number_of_rows']
-        
+
         # loop through line centers (single stream)
         for RowID in range(nline):
-            
+
             # get basic line parameters (lower level)
             LineCenterDB = LOCAL_TABLE_CACHE[TableName]['data']['nu'][RowID]
             LineIntensityDB = LOCAL_TABLE_CACHE[TableName]['data']['sw'][RowID]
@@ -19733,31 +19733,31 @@ def absorptionCoefficient_Doppler(Components=None,SourceTables=None,partitionFun
                 Shift0DB = LOCAL_TABLE_CACHE[TableName]['data']['delta_air'][RowID]
             else:
                 Shift0DB = 0
-            
+
             # filter by molecule and isotopologue
             if (MoleculeNumberDB,IsoNumberDB) not in ABUNDANCES: continue
-            
+
             # partition functions for T and Tref
             # TODO: optimize
             SigmaT = partitionFunction(MoleculeNumberDB,IsoNumberDB,T)
             SigmaTref = partitionFunction(MoleculeNumberDB,IsoNumberDB,Tref)
-            
+
             # get all environment dependences from voigt parameters
-            
+
             #   intensity
             LineIntensity = EnvironmentDependency_Intensity(LineIntensityDB,T,Tref,SigmaT,SigmaTref,
                                                             LowerStateEnergyDB,LineCenterDB)
-            
+
             #   FILTER by LineIntensity: compare it with IntencityThreshold
             # TODO: apply wing narrowing instead of filtering, this would be more appropriate
             if LineIntensity < IntensityThreshold: continue
-            
+
             cMassMol = 1.66053873e-27
             fSqrtMass = sqrt(molecularMass(MoleculeNumberDB,IsoNumberDB))
             cc_ = 2.99792458e8
             cBolts_ = 1.3806503e-23
             GammaD = (cSqrt2Ln2/cc_)*sqrt(cBolts_/cMassMol)*sqrt(T) * LineCenterDB/fSqrtMass
-                        
+
             #   get final wing of the line according to GammaD, OmegaWingHW and OmegaWing
             OmegaWingF = max(OmegaWing,OmegaWingHW*GammaD)
 
@@ -19774,7 +19774,7 @@ def absorptionCoefficient_Doppler(Components=None,SourceTables=None,partitionFun
     if File: save_to_file(File,Format,Omegas,Xsect)
     return Omegas,Xsect
 
-    
+
 # ---------------------------------------------------------------------------
 # SHORTCUTS AND ALIASES FOR ABSORPTION COEFFICIENTS
 # ---------------------------------------------------------------------------
@@ -19786,7 +19786,7 @@ def abscoef_HT(table=None,step=None,grid=None,env={'T':296.,'p':1.},file=None):
 
 def abscoef_Voigt(table=None,step=None,grid=None,env={'T':296.,'p':1.},file=None):
     return absorptionCoefficient_Voigt(SourceTables=table,OmegaStep=step,OmegaGrid=grid,Environment=env,File=file)
-    
+
 def abscoef_Lorentz(table=None,step=None,grid=None,env={'T':296.,'p':1.},file=None):
     return absorptionCoefficient_Lorentz(SourceTables=table,OmegaStep=step,OmegaGrid=grid,Environment=env,File=file)
 
@@ -19794,23 +19794,23 @@ def abscoef_Doppler(table=None,step=None,grid=None,env={'T':296.,'p':1.},file=No
     return absorptionCoefficient_Doppler(SourceTables=table,OmegaStep=step,OmegaGrid=grid,Environment=env,File=file)
 
 abscoef_Gauss = abscoef_Doppler
-    
+
 def abscoef(table=None,step=None,grid=None,env={'T':296.,'p':1.},file=None): # default
     return absorptionCoefficient_Lorentz(SourceTables=table,OmegaStep=step,OmegaGrid=grid,Environment=env,File=file)
-    
+
 # ---------------------------------------------------------------------------
-    
+
 def transmittanceSpectrum(Omegas,AbsorptionCoefficient,Environment={'l':100.},
                           File=None, Format='%e %e', Wavenumber=None):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         Wavenumber/Omegas:   wavenumber grid                    (required)
         AbsorptionCoefficient:  absorption coefficient on grid  (required)
         Environment:  dictionary containing path length in cm.
                       Default={'l':100.}
-        File:         name of the output file                 (optional) 
+        File:         name of the output file                 (optional)
         Format: c format used in file output, default '%e %e' (optional)
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         Wavenum: wavenumber grid
         Xsect:  transmittance spectrum calculated on the grid
     ---
@@ -19834,14 +19834,14 @@ def transmittanceSpectrum(Omegas,AbsorptionCoefficient,Environment={'l':100.},
 def absorptionSpectrum(Omegas,AbsorptionCoefficient,Environment={'l':100.},
                        File=None, Format='%e %e',Wavenumber=None):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         Wavenumber/Omegas:   wavenumber grid                    (required)
         AbsorptionCoefficient:  absorption coefficient on grid  (required)
         Environment:  dictionary containing path length in cm.
                       Default={'l':100.}
-        File:         name of the output file                 (optional) 
+        File:         name of the output file                 (optional)
         Format: c format used in file output, default '%e %e' (optional)
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         Wavenum: wavenumber grid
         Xsect:  absorption spectrum calculated on the grid
     ---
@@ -19865,15 +19865,15 @@ def absorptionSpectrum(Omegas,AbsorptionCoefficient,Environment={'l':100.},
 def radianceSpectrum(Omegas,AbsorptionCoefficient,Environment={'l':100.,'T':296.},
                      File=None, Format='%e %e', Wavenumber=None):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         Wavenumber/Omegas:   wavenumber grid                   (required)
         AbsorptionCoefficient:  absorption coefficient on grid (required)
         Environment:  dictionary containing path length in cm.
                       and temperature in Kelvin.
                       Default={'l':100.,'T':296.}
-        File:         name of the output file                 (optional) 
+        File:         name of the output file                 (optional)
         Format: c format used in file output, default '%e %e' (optional)
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         Wavenum: wavenumber grid
         Xsect:  radiance spectrum calculated on the grid
     ---
@@ -19881,9 +19881,9 @@ def radianceSpectrum(Omegas,AbsorptionCoefficient,Environment={'l':100.,'T':296.
         Calculate a radiance spectrum (in W/sr/cm^2/cm-1) based
         on previously calculated absorption coefficient.
         Radiance spectrum is calculated at an arbitrary
-        optical path length 'l' (1 m by default) and 
+        optical path length 'l' (1 m by default) and
         temperature 'T' (296 K by default). For obtaining a
-        physically meaningful result 'T' must be the same 
+        physically meaningful result 'T' must be the same
         as a temperature which was used in absorption coefficient.
     ---
     EXAMPLE OF USAGE:
@@ -19932,12 +19932,12 @@ def getStickXY(TableName):
 def read_hotw(filename):
     """
     Read cross-section file fetched from HITRAN-on-the-Web.
-    The format of the file line must be as follows: 
+    The format of the file line must be as follows:
       nu, coef
     Other lines are omitted.
     """
     import sys
-    f = open(filename,'r')
+    f = open(filename,'r',newline='\n')
     nu = []
     coef = []
     for line in f:
@@ -19949,12 +19949,12 @@ def read_hotw(filename):
             if False:
                 print(sys.exc_info())
             else:
-                pass    
+                pass
     return array(nu),array(coef)
 
 # alias for read_hotw for backwards compatibility
 read_xsect = read_hotw
-    
+
 # /----------------------------------------------------------------------------
 
 # ------------------  SPECTRAL CONVOLUTION -------------------------
@@ -20047,22 +20047,22 @@ def SLIT_MICHELSON(x,g):
 def convolveSpectrum(Omega,CrossSection,Resolution=0.1,AF_wing=10.,
                      SlitFunction=SLIT_RECTANGULAR,Wavenumber=None):
     """
-    INPUT PARAMETERS: 
+    INPUT PARAMETERS:
         Wavenumber/Omega:    wavenumber grid                     (required)
         CrossSection:  high-res cross section calculated on grid (required)
         Resolution:    instrumental resolution γ                 (optional)
         AF_wing:       instrumental function wing                (optional)
         SlitFunction:  instrumental function for low-res spectra calculation (optional)
-    OUTPUT PARAMETERS: 
+    OUTPUT PARAMETERS:
         Wavenum: wavenumber grid
         CrossSection: low-res cross section calculated on grid
         i1: lower index in Omega input
         i2: higher index in Omega input
         slit: slit function calculated over grid [-AF_wing; AF_wing]
-                with the step equal to instrumental resolution. 
+                with the step equal to instrumental resolution.
     ---
     DESCRIPTION:
-        Produce a simulation of experimental spectrum via the convolution 
+        Produce a simulation of experimental spectrum via the convolution
         of a “dry” spectrum with an instrumental function.
         Instrumental function is provided as a parameter and
         is calculated in a grid with the width=AF_wing and step=Resolution.
@@ -20071,7 +20071,7 @@ def convolveSpectrum(Omega,CrossSection,Resolution=0.1,AF_wing=10.,
         nu_,radi_,i,j,slit = convolveSpectrum(nu,radi,Resolution=2.0,AF_wing=10.0,
                                                 SlitFunction=SLIT_MICHELSON)
     ---
-    """    
+    """
     # compatibility with older versions
     if Wavenumber: Omega=Wavenumber
     step = Omega[1]-Omega[0]
